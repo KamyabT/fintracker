@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+
+@theme {
+
+  --color-primary: #4338ca;
+  --color-primary-light: #5b5ff8;
+  --color-primary-dark: #312e81;
+
+
+
+
+  --color-back-primary: #fdfdfd;
+  --color-back-secondary: #f9fafc;
+
+  --color-primary-gradient: linear-gradient(135deg, #4338ca 0%, #5b5ff8 100%);
+}
+
+
+* {
+    font-family: 'Inter', sans-serif;
+    /* font-family: "Plus Jakarta Sans", sans-serif; */
+}
