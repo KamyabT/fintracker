@@ -7,11 +7,7 @@
   --primary-light: #5b5ff8;
   --primary-dark: #312e81;
 
-  --primary-gradient: linear-gradient(
-    135deg,
-    #4338ca 0%,
-    #5b5ff8 100%
-  );
+  --primary-gradient: linear-gradient(135deg, #4338ca 0%, #5b5ff8 100%);
 
   /* ===========================
      Sidebar
@@ -107,4 +103,11 @@
   =========================== */
 
   --transition: all 0.25s ease;
+}
+
+/*********************Typo********************/
+
+.font1 {
+  font-family: "Inter", sans-serif !important;
+  font-weight: 700 !important;
 }

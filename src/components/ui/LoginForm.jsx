@@ -2,19 +2,27 @@ import { useForm } from "react-hook-form";
 
 const LoginForm = () => {
   return (
-    <form className="flex flex-col grow">
-      <label htmlFor="email">Email</label>
-      <input
-        className="w-100 px-4 py-2 outline-none border border-gray-300 appearance-none rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-400"
-        type="email"
-        placeholder="you@example.com"
-      />
-      <label className="" htmlFor="password">Password</label>
-      <input
-        className="w-100 px-4 py-2 outline-none border border-gray-300 appearance-none rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-400"
-        type="password bg-white"
-        placeholder="••••••••"
-      />
+    <form className="flex flex-col grow w-full space-y-4">
+      <div className="">
+        <label className="" htmlFor="email">
+          Email
+        </label>
+        <input
+          className="w-full mt-2 px-4 py-2 outline-none border border-gray-300 appearance-none rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-400"
+          type="email"
+          placeholder="you@example.com"
+        />
+      </div>
+      <div className="">
+        <label className="" htmlFor="password">
+          Password
+        </label>
+        <input
+          className="w-full mt-2 px-4 py-2 outline-none border border-gray-300 appearance-none rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-400"
+          type="password"
+          placeholder="••••••••"
+        />
+      </div>
       <div className="flex flex-row justify-between">
         <div className="flex flex-row items-center gap-2">
           <input type="checkbox" id="remember" />
