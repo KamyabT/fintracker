@@ -21,16 +21,24 @@ const Login = () => {
             </a>
           </div>
         </div>
-        <div className="flex flex-col flex-1 justify-center px-10 w-full">
-          <div className="flex flex-col items-start self-start mb-5">
-            <h2 className="font1 text-4xl font-bold mb-2">Welcome back!</h2>
-            <p>Please login to your account to continue.</p>
-          </div>
+        <div className="flex flex-col flex-1 justify-center items-center px-10 w-full">
           <div className="w-full max-w-lg">
+            <h2 className="font1 text-4xl font-semibold mb-2">Welcome back!</h2>
+            <p className="font-normal text-gray-400">
+              Please login to your account to continue.
+            </p>
             <LoginForm />
           </div>
-          <div>SSO</div>
-          <div>
+          <div className="flex items-center flex-row w-full max-w-lg mt-5">
+            <div className="flex-1 border-t border-gray-200"></div>
+            <span className="px-4 text-sm text-gray-400">or continue with</span>
+            <div className="flex-1 border-t border-gray-200"></div>
+          </div>
+          <div className="flex flex-row justify-between mt-5 max-w-lg w-full">
+            <button className="w-full bg-red-200 me-2">Continue with Google</button>
+            <button className="w-full bg-red-200 ms-2">Continue with apple</button>
+          </div>
+          <div className="mt-5">
             <p>Your data is secure and encrypted.</p>
           </div>
         </div>

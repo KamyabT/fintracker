@@ -2,23 +2,23 @@ import { useForm } from "react-hook-form";
 
 const LoginForm = () => {
   return (
-    <form className="flex flex-col grow w-full space-y-4">
+    <form className="flex flex-col grow w-full space-y-4 mt-4">
       <div className="">
-        <label className="" htmlFor="email">
-          Email
+        <label className="font-medium" htmlFor="email">
+          Email address
         </label>
         <input
-          className="w-full mt-2 px-4 py-2 outline-none border border-gray-300 appearance-none rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-400"
+          className="w-full mt-2 px-4 py-3 outline-none border border-gray-300 appearance-none rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-400"
           type="email"
           placeholder="you@example.com"
         />
       </div>
-      <div className="">
-        <label className="" htmlFor="password">
+      <div className="mt-3">
+        <label className="font-medium" htmlFor="password">
           Password
         </label>
         <input
-          className="w-full mt-2 px-4 py-2 outline-none border border-gray-300 appearance-none rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-400"
+          className="w-full mt-2 px-4 py-3 outline-none border border-gray-300 appearance-none rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-400"
           type="password"
           placeholder="••••••••"
         />
