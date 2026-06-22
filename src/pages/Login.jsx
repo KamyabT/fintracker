@@ -35,12 +35,16 @@ const Login = () => {
             <div className="flex-1 border-t border-gray-200"></div>
           </div>
           <div className="flex flex-row justify-between mt-5 max-w-lg w-full">
-            <button className="w-full bg-red-200 me-2">Continue with Google</button>
-            <button className="w-full bg-red-200 ms-2">Continue with apple</button>
+            <button className="w-full me-2 border border-gray-300 text-gray-500 font-medium py-3 rounded-md cursor-pointer hover:bg-indigo-200 hover:text-gray-700">
+              Continue with Google
+            </button>
+            <button className="w-full ms-2 border border-gray-300 text-gray-500 font-medium py-3 rounded-md cursor-pointer hover:bg-indigo-200 hover:text-gray-700">
+              Continue with apple
+            </button>
           </div>
-          <div className="mt-5">
-            <p>Your data is secure and encrypted.</p>
-          </div>
+        </div>
+        <div className="mb-5">
+          <p>Your data is secure and encrypted.</p>
         </div>
       </section>
     </main>
