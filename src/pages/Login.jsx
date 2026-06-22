@@ -1,5 +1,8 @@
 import LoginForm from "../components/ui/LoginForm";
 import Logo from "../assets/loginAside.png";
+import googleLogo from "../assets/google.png";
+import appleLogo from "../assets/apple.png";
+import { ShieldCheck } from "lucide-react";
 
 const Login = () => {
   return (
@@ -11,12 +14,14 @@ const Login = () => {
           className="h-full w-full object-cover rounded-l-lg"
         />
       </section>
-      <section className="flex flex-col items-center justify-center h-full bg-back-primary rounded-r-lg w-full">
+      <section className="flex p-7 flex-col items-center justify-center h-full bg-back-primary rounded-r-lg w-full">
         <div className="flex flex-row flex-none justify-end w-full">
-          <div>Dark Mode</div>
+          {/* <div>Dark Mode</div> */}
           <div className="flex flex-row">
-            <span className="text-gray-600 font-sans">Don't have an account?</span>
-            <a href="/register" className="text-blue-500">
+            <span className="text-gray-600 font-medium font-sans me-2">
+              Don't have an account?
+            </span>
+            <a href="/register" className="font-medium text-indigo-500">
               Sign up
             </a>
           </div>
@@ -35,16 +40,21 @@ const Login = () => {
             <div className="flex-1 border-t border-gray-200"></div>
           </div>
           <div className="flex flex-row justify-between mt-5 max-w-lg w-full">
-            <button className="w-full me-2 border border-gray-300 text-gray-500 font-medium py-3 rounded-md cursor-pointer hover:bg-indigo-200 hover:text-gray-700">
+            <button className="w-full flex flex-row items-center justify-center me-2 border border-gray-300 text-gray-500 font-medium py-3 rounded-md cursor-pointer hover:bg-indigo-200 hover:text-gray-700">
+              <img src={googleLogo} alt="" className="h-5 me-4" />
               Continue with Google
             </button>
-            <button className="w-full ms-2 border border-gray-300 text-gray-500 font-medium py-3 rounded-md cursor-pointer hover:bg-indigo-200 hover:text-gray-700">
+            <button className="w-full flex flex-row items-center justify-center ms-2 border border-gray-300 text-gray-500 font-medium py-3 rounded-md cursor-pointer hover:bg-indigo-200 hover:text-gray-700">
+              <img src={appleLogo} alt="" className="h-5 me-4" />
               Continue with apple
             </button>
           </div>
         </div>
-        <div className="mb-5">
-          <p>Your data is secure and encrypted.</p>
+        <div className="flex flex-row mb-5">
+          <ShieldCheck className="me-2" color="gray" />
+          <p className="text-1xl text-gray-500 font-medium">
+            Your data is secure and encrypted.
+          </p>
         </div>
       </section>
     </main>
