@@ -1,4 +1,5 @@
 import LoginForm from "../components/ui/LoginForm";
+import { Link } from "react-router-dom";
 import Logo from "../assets/loginAside.png";
 import googleLogo from "../assets/google.png";
 import appleLogo from "../assets/apple.png";
@@ -21,9 +22,9 @@ const Login = () => {
             <span className="text-gray-600 font-medium font-sans me-2">
               Don't have an account?
             </span>
-            <a href="/register" className="font-medium text-indigo-500">
+            <Link to="/register" className="font-medium text-indigo-500">
               Sign up
-            </a>
+            </Link>
           </div>
         </div>
         <div className="flex flex-col flex-1 justify-center items-center px-10 w-full">

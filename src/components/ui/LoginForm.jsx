@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
-import auth from "../../services/auth";
-
+import {auth} from "../../services/auth";
+import Button from "./Button";
 import { Mail, LockKeyhole } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const LoginForm = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -14,16 +14,18 @@ const LoginForm = () => {
   } = useForm();
 
   async function onSubmit({ email, password }) {
-    const response = await auth(email, password);
-    if (!response.status === 200) {
-      toast.error("Login failed, Please try again");
-    } else {
-      toast.success("Login successfull, redirecting to dashboard");
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.record));
-      setTimeout(() => {
-        Navigate("/dashboard");
-      }, 3000);
+    try {
+      const response = await auth(email, password);
+      if (response.status !== 200) {
+        toast.error("Login failed, Please try again");
+      } else {
+        toast.success("Login successfull, redirecting to dashboard");
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.record));
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      toast.error(`Login failed with ${error.name}, Please try again`);
     }
   }
 
@@ -72,12 +74,12 @@ const LoginForm = () => {
         </div>
         <div className="text-indigo-500">Forgot password?</div>
       </div>
-      <button
-        className="w-full py-3 px-4 rounded-lg font-semibold text-white cursor-pointer transition hover:bg-indigo-700 bg-indigo-600"
-        type="submit"
+      <Button
+        classesList={`w-full py-3 px-4 rounded-lg font-semibold text-white cursor-pointer transition hover:bg-indigo-700 bg-indigo-600`}
+        type={"submit"}
       >
         Login
-      </button>
+      </Button>
     </form>
   );
 };
