@@ -1,21 +1,83 @@
 import { Link } from "react-router-dom";
 import style from "./Sidebar.module.css";
+import {
+  House,
+  ArrowLeftRight,
+  ChartPie,
+  LayoutGrid,
+  User,
+  Settings,
+  LogOut,
+} from "lucide-react";
+import LogoLight from "../assets/Logo-Light.png";
 
 const Sidebar = () => {
   return (
-    <aside className={style.aside}>
-      <div className="flex flex-col justify-between h-screen">
-        <div>
-          <div>logo</div>
-          <nav className="flex flex-col">
-            <Link to="/dashboard">Dashboard</Link>
-            <Link to="/transactions">Transactions</Link>
-            <Link to="/budget">Budget</Link>
-            <Link to="/categories">Categories</Link>
-            <Link to="/profile">Profile</Link>
+    <aside className={`bg-back-sidebar-primary ${style.aside}`}>
+      <div className="flex flex-col justify-between h-screen p-3">
+        <div className="">
+          <div className="flex items-center justify-center my-5">
+            <img
+              src={LogoLight}
+              alt=""
+              className="flex items-center justify-center h-14"
+            />
+          </div>
+          <nav className="flex flex-col w-full gap-y-3">
+            <Link
+              className="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md w-full font-normal"
+              to="/dashboard"
+            >
+              <House className="flex justify-center items-center" />
+              Dashboard
+              <span></span>
+            </Link>
+            <Link
+              className="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md"
+              to="/transactions"
+            >
+              <ArrowLeftRight className="" />
+              <span>Transactions</span>
+            </Link>
+            <Link
+              className="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md"
+              to="/budget"
+            >
+              <ChartPie className="" />
+              <span>Budget</span>
+            </Link>
+            <Link
+              className="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md"
+              to="/categories"
+            >
+              <LayoutGrid className="" />
+              <span>Categories</span>
+            </Link>
+            <Link
+              className="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md"
+              to="/profile"
+            >
+              <User className="" />
+              <span>Profile</span>
+            </Link>
           </nav>
         </div>
-        <div>profile</div>
+        <nav>
+          <Link
+            className="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md"
+            to="/profile"
+          >
+            <Settings className="" />
+            <span>Settings</span>
+          </Link>
+          <Link
+            className="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md"
+            to="/profile"
+          >
+            <LogOut className="" />
+            <span>Logout</span>
+          </Link>
+        </nav>
       </div>
     </aside>
   );
