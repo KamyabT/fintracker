@@ -1,11 +1,14 @@
 import { useForm } from "react-hook-form";
-import {auth} from "../../services/auth";
+import { auth } from "../../services/auth";
+import { useAuth } from "../../context/AuthContext";
 import Button from "./Button";
 import { Mail, LockKeyhole } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const LoginForm = () => {
+  const { login } = useAuth();
+
   const navigate = useNavigate();
   const {
     register,
@@ -20,14 +23,16 @@ const LoginForm = () => {
         toast.error("Login failed, Please try again");
       } else {
         toast.success("Login successfull, redirecting to dashboard");
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.record));
+        login(response.data.record, response.data.token);
         navigate("/dashboard");
       }
     } catch (error) {
       toast.error(`Login failed with ${error.name}, Please try again`);
     }
   }
+
+
+
 
   return (
     <form
@@ -47,7 +52,13 @@ const LoginForm = () => {
           className="w-full mt-2 px-4 py-3 ps-10 outline-none border border-gray-300 appearance-none rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-400"
           type="email"
           placeholder="you@example.com"
-          {...register("email", { required: "Email is required" })}
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Please Enter A Valid Email!",
+            },
+          })}
         />
       </div>
       <div className="relative">
@@ -64,7 +75,13 @@ const LoginForm = () => {
           className="w-full mt-2 px-4 py-3 ps-10 outline-none border border-gray-300 appearance-none rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-400"
           type="password"
           placeholder="••••••••"
-          {...register("password", { required: "Password is required" })}
+          {...register("password", {
+            required: "Password is required",
+            minLength: {
+              value: 8,
+              message: "Password must be at least 8 characters long!",
+            },
+          })}
         />
       </div>
       <div className="flex flex-row justify-between">

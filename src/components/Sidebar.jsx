@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import style from "./Sidebar.module.css";
 import {
   House,
@@ -10,8 +10,20 @@ import {
   LogOut,
 } from "lucide-react";
 import LogoLight from "../assets/Logo-Light.png";
+import { useAuth } from "../context/AuthContext";
+import Button from "./ui/Button";
+import toast from "react-hot-toast";
 
 const Sidebar = () => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  function handleLogOut() {
+    logout();
+    toast.success("You have successfully logged out, see you soon!")
+    navigate("/");
+  }
+
   return (
     <aside className={`bg-back-sidebar-primary ${style.aside}`}>
       <div className="flex flex-col justify-between h-screen p-3">
@@ -70,13 +82,13 @@ const Sidebar = () => {
             <Settings className="" />
             <span>Settings</span>
           </Link>
-          <Link
-            className="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md"
-            to="/profile"
+          <Button
+            classesList="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md w-full"
+            onClick={handleLogOut}
           >
             <LogOut className="" />
             <span>Logout</span>
-          </Link>
+          </Button>
         </nav>
       </div>
     </aside>
