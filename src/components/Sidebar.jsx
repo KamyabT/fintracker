@@ -83,7 +83,7 @@ const Sidebar = () => {
             <span>Settings</span>
           </Link>
           <Button
-            classesList="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md w-full"
+            classesList="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md w-full cursor-pointer"
             onClick={handleLogOut}
           >
             <LogOut className="" />
