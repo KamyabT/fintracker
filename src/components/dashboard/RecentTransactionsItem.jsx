@@ -2,14 +2,12 @@ import { CircleArrowDown, CircleArrowUp } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "../../context/AuthContext";
 
-const RecentTransactionsList = ({ transaction }) => {
+const RecentTransactionsItem = ({ transaction }) => {
   const { transactionName, category, transactionDate, type, amount } = transaction;
   const { user } = useAuth();
 
-  console.log(user, "user ");
-
   return (
-    <div className="grid grid-cols-[50px_1fr_1fr_1fr_1fr_1fr] border-b-1 border-gray-100 py-2">
+    <div className="grid grid-cols-[50px_1fr_1fr_1.5fr_1fr_1fr] border-b-1 border-gray-100 py-2">
       <div className="flex items-center">
         {type === "Income" ? (
           <CircleArrowUp color="#2bc417" size={32} />
@@ -21,12 +19,12 @@ const RecentTransactionsList = ({ transaction }) => {
         <p className="font-semibold">{transactionName}</p>
         <span className="font-semibold text-sm text-gray-500">{category}</span>
       </div>
-      <div className="flex flex-col justify-center ">
-        <span className="font-medium text-[14px] flex items-center text-gray-500">
-          {format(transactionDate, "MMM d, y")}
-        </span>
+      <div className="flex flex-row justify-center space-x-3">
         <span className="font-medium text-[14px] flex items-center text-gray-500">
           {format(transactionDate, "kk:m a")}
+        </span> 
+        <span className="font-medium text-[14px] flex items-center text-gray-500">
+          {format(transactionDate, "MMM d, y")}
         </span>
       </div>
       <div className="flex justify-center items-center">
@@ -49,4 +47,4 @@ const RecentTransactionsList = ({ transaction }) => {
   );
 };
 
-export default RecentTransactionsList;
+export default RecentTransactionsItem;
