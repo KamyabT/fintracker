@@ -13,7 +13,7 @@ const StatsBox = ({ stat }) => {
           <p className="font-semibold text-[20px]">
             {stat.amount < 0
               ? `-${user.currency}${Math.abs(stat.amount)}`
-              : `${user.currency}${stat.amount}`}
+              : `${stat.title === "Saving Rate" ? "" : user.currency}${stat.amount}`}
           </p>
         </div>
       </div>

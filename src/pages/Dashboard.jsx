@@ -1,32 +1,23 @@
+import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import StatsBox from "../components/dashboard/StatsBox";
 import ExpensesOverview from "../components/dashboard/ExpensesOverview";
 import ExpensesByCategory from "../components/dashboard/ExpensesByCategory";
 import RecentTransactions from "../components/dashboard/RecentTransactions";
 import MonthSummary from "../components/dashboard/MonthSummary";
-import { useTransactions } from "../context/TransactionsContext";
-import { getTransactions } from "../services/transactions";
-import { useEffect, useState } from "react";
+import { useTransactionStats } from "../hooks/useTransactionStats";
 import { CircleDollarSign, Wallet, PiggyBank } from "lucide-react";
+import Header from "../components/Header";
+import AddTransactionForm from "../components/ui/AddTransactionForm";
 
 const Dashboard = () => {
-  const { totalIncomes, totalExpenses , netBalance , savingRate } = useTransactions();
-  const [res, setRes] = useState(null);
-
-  useEffect(() => {
-    async function getData() {
-      const result = await getTransactions();
-      setRes(result);
-      console.log(result, "results");
-    }
-
-    getData();
-  }, []);
+  const { totalIncome, totalExpenses, netBalance, savingRate } = useTransactionStats();
+  const [add , setAdd] = useState(true);
 
   const stats = [
     {
       title: "Total Income",
-      amount: totalIncomes,
+      amount: totalIncome,
       icon: <CircleDollarSign color="green" size={42} />,
     },
     {
@@ -50,9 +41,11 @@ const Dashboard = () => {
     <div className="flex flex-row bg-back-secondary ">
       <Sidebar />
       <main className="flex-1 px-5 py-5">
+        {add && <AddTransactionForm />}
+        <Header />
         <section className="grid gap-4 md:grid-cols-4">
           {stats.map((stat) => {
-            return <StatsBox stat={stat} key={stat.title}/>;
+            return <StatsBox stat={stat} key={stat.title} />;
           })}
         </section>
         <section className="grid grid-cols-2 gap-4 mt-5">

@@ -22,7 +22,7 @@ const RecentTransactionsItem = ({ transaction }) => {
       <div className="flex flex-row justify-center space-x-3">
         <span className="font-medium text-[14px] flex items-center text-gray-500">
           {format(transactionDate, "kk:m a")}
-        </span> 
+        </span>
         <span className="font-medium text-[14px] flex items-center text-gray-500">
           {format(transactionDate, "MMM d, y")}
         </span>
@@ -39,7 +39,7 @@ const RecentTransactionsItem = ({ transaction }) => {
           className={`${type === "Income" ? "text-state--success" : "text-state--danger"} font-bold text-[18px] flex items-center rounded-md`}
         >
           {type === "Income" ? "+" : "-"}
-          {user.currency}
+          {user?.currency || "$"}
           {amount.toFixed(2)}
         </span>
       </div>

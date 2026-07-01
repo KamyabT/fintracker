@@ -1,21 +1,25 @@
 import api from "./api";
+const token = localStorage.getItem("token");
 
-export async function getTransactions(currentPage = 1, perPage = 5) {
-  const token = localStorage.getItem("token");
+export async function getAllTransactions() {
+  const result = await api.get("/collections/transactions/records", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
+  });
+  return result;
+}
 
-  try {
-    const transactionsResult = await api.get(
-      `/collections/transactions/records?page=${currentPage}&perPage=${perPage}`,
-      {
-        headers: {
-          Authorization: token,
-        },
+export async function getTransactions(page = 1, perPage = 5) {
+  const result = await api.get(
+    `/collections/transactions/records?page=${page}&perPage=${perPage}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token}`,
       },
-    );
-    return transactionsResult;
-  } catch (error) {
-    console.log(error);
-  }
-
-  console.log("get transactions");
+    }
+  );
+  return result;
 }
