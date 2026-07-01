@@ -1,10 +1,23 @@
 import Button from "./Button";
 import { DollarSign, MoveUpRight, ArrowDownToLine } from "lucide-react";
+import { addNewTransaction } from "../../services/transactions";
+import {useForm} from "react-hook-form";
 
-const AddTransactionForm = () => {
+const AddTransactionForm = ({ setAdd }) => {
+  const { register, handleSubmit } = useForm();
+
+  function handleAddTransactionForm() {
+    setAdd(false);
+  }
+
+
+  function onSubmit(data) {
+    console.log(data);
+  }
+
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
-      <form className="bg-white w-full max-w-lg rounded-lg shadow-lg p-6" action="">
+      <form className="bg-white w-full max-w-lg rounded-lg shadow-lg p-6" onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-4">
           <div className="flex flex-row justify-between">
             <div className="flex flex-col mb-1">
@@ -13,9 +26,11 @@ const AddTransactionForm = () => {
                 Record your income or expense.
               </span>
             </div>
-            <div className="cursor-pointer">X</div>
+            <div className="cursor-pointer" onClick={handleAddTransactionForm}>
+              X
+            </div>
           </div>
-          <div className="flex flex-row justify-betwen gap-x-8">
+          <div className="flex flex-row justify-betwen gap-x-6">
             <div className="flex flex-col w-full">
               <label className="font-medium mb-2" htmlFor="">
                 Transaction Type
@@ -49,7 +64,7 @@ const AddTransactionForm = () => {
               />
             </div>
           </div>
-          <div className="flex flex-row justify-betwen gap-x-8">
+          <div className="flex flex-row justify-betwen gap-x-6">
             <div className="flex flex-col w-full">
               <label className="font-medium mb-2" htmlFor="">
                 Category
@@ -85,7 +100,7 @@ const AddTransactionForm = () => {
               placeholder="What was this transaction for?"
             />
           </div>
-          <div className="flex flex-row justify-between gap-x-8">
+          <div className="flex flex-row justify-between gap-x-6">
             <div className="flex flex-col w-full">
               <label className="font-medium mb-2" htmlFor="">
                 Date
@@ -109,11 +124,13 @@ const AddTransactionForm = () => {
           <div className="flex flex-row justify-end mt-10">
             <Button
               classesList={`bg-gray-300 px-3 py-2 rounded-lg me-3 cursor-pointer hover:bg-red-500 hover:text-white`}
+              onClick={handleAddTransactionForm}
             >
               Cancel
             </Button>
             <Button
               classesList={`bg-gray-300 px-3 py-2 rounded-lg cursor-pointer hover:bg-primary hover:text-white`}
+              onClick={(e) => addNewTransaction(e)}
             >
               Save Transaction
             </Button>

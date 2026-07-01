@@ -1,6 +1,9 @@
 import Button from "./ui/Button";
 
-const Header = () => {
+const Header = ({ setAdd }) => {
+  function handleAddNewtrans() {
+    setAdd(true);
+  }
   return (
     <header className="mb-5">
       <div className="flex flex-row justify-between">
@@ -11,7 +14,11 @@ const Header = () => {
           </span>
         </div>
         <div className="flex flex-row items-center">
-          <Button classesList="bg-primary text-white px-4 py-2 rounded-lg font-normal text-[14px] hover:bg-primary-dark cursor-pointer me-4" type="button">
+          <Button
+            classesList="bg-primary text-white px-4 py-2 rounded-lg font-normal text-[14px] hover:bg-primary-dark cursor-pointer me-4"
+            onClick={handleAddNewtrans}
+            type="button"
+          >
             + Add Transaction
           </Button>
           <div>notification</div>
