@@ -15,7 +15,9 @@ const AddTransactionForm = ({ setAdd }) => {
   }
 
   async function onSubmit(data) {
-    const finalData = { ...data, user: userId };
+    const transactionDate = new Date(`${data.date}T${data.time}`).toISOString();
+    const finalData = { ...data, user: userId, transactionDate: transactionDate };
+    console.log(finalData, "final data");
     try {
       const result = await addNewTransaction(finalData);
       if (result.status === 200) {
