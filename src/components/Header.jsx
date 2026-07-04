@@ -23,7 +23,7 @@ const Header = ({ setAdd }) => {
           </Button>
           <div>notification</div>
           <div className="flex flex-row items-center">
-            <img src="" alt="" />
+            <img src="#" alt="" />
             <p>Ali Rezaie</p>
           </div>
         </div>

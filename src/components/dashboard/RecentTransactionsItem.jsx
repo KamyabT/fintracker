@@ -6,6 +6,12 @@ const RecentTransactionsItem = ({ transaction }) => {
   const { transactionName, category, transactionDate, type, amount } = transaction;
   const { user } = useAuth();
 
+  console.log(transaction);
+  console.log(transactionDate);
+  console.log(new Date(transactionDate));
+  console.log(new Date(transactionDate).getTime());
+  console.log(JSON.stringify(transactionDate));
+
   return (
     <div className="grid grid-cols-[50px_1fr_1fr_1.5fr_1fr_1fr] border-b-1 border-gray-100 py-2">
       <div className="flex items-center">
@@ -21,10 +27,10 @@ const RecentTransactionsItem = ({ transaction }) => {
       </div>
       <div className="flex flex-row justify-center space-x-3">
         <span className="font-medium text-[14px] flex items-center text-gray-500">
-          {format(transactionDate, "kk:m a")}
+          {format(new Date(transactionDate), "hh:mm a")}
         </span>
         <span className="font-medium text-[14px] flex items-center text-gray-500">
-          {format(transactionDate, "MMM d, y")}
+          {format(new Date(transactionDate), "MMM d, y")}
         </span>
       </div>
       <div className="flex justify-center items-center">

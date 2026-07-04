@@ -1,23 +1,39 @@
 import Button from "./Button";
 import { DollarSign, MoveUpRight, ArrowDownToLine } from "lucide-react";
 import { addNewTransaction } from "../../services/transactions";
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { data } from "autoprefixer";
+import { parse } from "date-fns";
+import toast from "react-hot-toast";
 
 const AddTransactionForm = ({ setAdd }) => {
   const { register, handleSubmit } = useForm();
+  const userId = JSON.parse(localStorage.getItem("user")).id;
 
   function handleAddTransactionForm() {
     setAdd(false);
   }
 
-
-  function onSubmit(data) {
-    console.log(data);
+  async function onSubmit(data) {
+    const finalData = { ...data, user: userId };
+    try {
+      const result = await addNewTransaction(finalData);
+      if (result.status === 200) {
+        setAdd(false);
+        toast.success("Transcaction added successfully");
+      }
+      console.log(result, "result of adding");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
-      <form className="bg-white w-full max-w-lg rounded-lg shadow-lg p-6" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="bg-white w-full max-w-lg rounded-lg shadow-lg p-6"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="space-y-4">
           <div className="flex flex-row justify-between">
             <div className="flex flex-col mb-1">
@@ -29,6 +45,19 @@ const AddTransactionForm = ({ setAdd }) => {
             <div className="cursor-pointer" onClick={handleAddTransactionForm}>
               X
             </div>
+          </div>
+          <div className="flex flex-col">
+            <label className="font-medium mb-2" htmlFor="">
+              Transaction Name
+            </label>
+            <input
+              className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
+              type="text"
+              placeholder="Transaction Name"
+              {...register("transactionName", {
+                required: "Transaction Name is required",
+              })}
+            />
           </div>
           <div className="flex flex-row justify-betwen gap-x-6">
             <div className="flex flex-col w-full">
@@ -61,6 +90,7 @@ const AddTransactionForm = ({ setAdd }) => {
                 type="number"
                 className="border border-gray-300 pl-6 py-2 rounded-md outline-none focus:border-primary"
                 placeholder="00.0"
+                {...register("amount", { required: "Amount is required" })}
               />
             </div>
           </div>
@@ -73,8 +103,9 @@ const AddTransactionForm = ({ setAdd }) => {
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
                 name=""
                 id=""
+                {...register("category", { required: "Category is required" })}
               >
-                <option value="">Food & Dinning</option>
+                <option value="foodDining">Food & Dinning</option>
               </select>
             </div>
             <div className="flex flex-col w-full">
@@ -85,8 +116,11 @@ const AddTransactionForm = ({ setAdd }) => {
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
                 name=""
                 id=""
+                {...register("paymentAccount", {
+                  required: "Payment Account is required",
+                })}
               >
-                <option value="">Main Wallet</option>
+                <option value="mainWallet">Main Wallet</option>
               </select>
             </div>
           </div>
@@ -98,6 +132,7 @@ const AddTransactionForm = ({ setAdd }) => {
               className="border border-gray-300 outline-none w-full rounded-md px-3 py-2 focus:border-primary"
               type="text"
               placeholder="What was this transaction for?"
+              {...register("description")}
             />
           </div>
           <div className="flex flex-row justify-between gap-x-6">
@@ -108,6 +143,7 @@ const AddTransactionForm = ({ setAdd }) => {
               <input
                 type="date"
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
+                {...register("date", { required: "Transaction date is required" })}
               />
             </div>
             <div className="flex flex-col w-full">
@@ -117,6 +153,7 @@ const AddTransactionForm = ({ setAdd }) => {
               <input
                 type="time"
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
+                {...register("time", { required: "Transaction time is required" })}
               />
             </div>
           </div>
@@ -130,7 +167,7 @@ const AddTransactionForm = ({ setAdd }) => {
             </Button>
             <Button
               classesList={`bg-gray-300 px-3 py-2 rounded-lg cursor-pointer hover:bg-primary hover:text-white`}
-              onClick={(e) => addNewTransaction(e)}
+              type="submit"
             >
               Save Transaction
             </Button>

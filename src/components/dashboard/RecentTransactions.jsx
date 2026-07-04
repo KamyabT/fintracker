@@ -14,7 +14,6 @@ const RecentTransactions = () => {
   }
 
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
-  console.log(pages , "pages count")
 
   return (
     <div className="bg-back-white px-4 py-4 rounded-md shadow-sm">

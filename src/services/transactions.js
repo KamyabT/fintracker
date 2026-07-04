@@ -24,28 +24,26 @@ export async function getTransactions(page = 1, perPage = 5) {
   return result;
 }
 
-export async function addNewTransaction(e) {
-  e.preventDefault();
+export async function addNewTransaction(data) {
   try {
-    const result = await api.post(
-      "/collections/transactions/records",
-      {
-        transactionName: "test",
-        amount: 50,
-        type: "Income",
-        category: "food",
-        transactionDate: "2026-06-27 19:28:24.000Z",
-        description: "",
-        user: "xgkdxl79ys7zsym",
+    const result = await api.post("/collections/transactions/records", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+    });
+    console.log(result , "result before returning")
     return result;
   } catch (error) {
     console.log(error.response.data);
   }
 }
+
+// {
+//   transactionName: "test",
+//   amount: 50,
+//   type: "Income",
+//   category: "food",
+//   transactionDate: "2026-06-27 19:28:24.000Z",
+//   description: "",
+//   user: "xgkdxl79ys7zsym",
+// }
