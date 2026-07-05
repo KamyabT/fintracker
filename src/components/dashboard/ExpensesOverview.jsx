@@ -27,48 +27,30 @@ const renderCustomBarLabel = ({ x, y, width, value }) => {
 
 const ExpensesOverview = () => {
   const { allTransactions } = useTransactions();
-  console.log("allTransactions", allTransactions);
-  const thisMonthTransactions = allTransactions?.filter(
-    (transaction) =>
-      isThisMonth(new Date(transaction.transactionDate)) &&
-      transaction.type === "Expense",
-  );
-
   /***************************/
 
   let start = startOfMonth(new Date());
   let end = lastDayOfMonth(new Date());
 
-  const betweendays = eachDayOfInterval({
-    start: new Date(start),
-    end: new Date(end),
-  });
+  const thisMonthTransactions = allTransactions?.filter(
+    (transaction) =>
+      (isThisMonth(new Date(transaction.transactionDate)) &&
+        transaction.type === "Expense"),
+  );
 
-  const days = betweendays.map((day) => day.getDate());
-  const Data = Array.from({ length: days.length }, (_, i) => i + 1);
 
-  const barData = [];
-  for (let i = 0; i < Data.length; i++) {
-    barData.push({
-      name: Data[i],
-      amount: 0,
-    });
-  }
+  const ExpensesByDay = thisMonthTransactions.reduce((acc, transaction) => {
+    const transactionDay = new Date(transaction.transactionDate).getDate();
+    acc[transactionDay] = (acc[transactionDay] || 0) + transaction.amount;
+    return acc;
+  }, {});
 
-  // const ExpensesByDay = thisMonthTransactions.reduce((acc , transaction) =>{
-  //   const transactionDay = new Date(transaction.transactionDate).getDate();
-  //   acc[transactionDay] = (acc[transactionDay] || 0) + transaction.amount;
-  //   return acc;
-  // }, {});
 
-  thisMonthTransactions?.forEach((transaction) => {
-    const transactionDate = new Date(transaction.transactionDate);
-    const transactionDay = transactionDate.getDate();
-    const barItem = barData.find((item) => item.name === transactionDay);
-    if (barItem) {
-      barItem.amount += transaction.amount;
-    }
-  });
+  const barData = eachDayOfInterval({start, end}).map((day)=> ({
+    name: day.getDate(),
+    amount: ExpensesByDay[day.getDate()] || 0,
+  }))
+
 
   return (
     <div className="bg-back-white space-y-6 px-4 py-4 rounded-md shadow-sm">
