@@ -5,7 +5,14 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const AddTransactionForm = ({ setAdd }) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, watch, setValue } = useForm({
+    defaultValues: {
+      type: "expense",
+    },
+  });
+
+  const selectedType = watch("type");
+
   const userId = JSON.parse(localStorage.getItem("user")).id;
 
   function handleAddTransactionForm() {
@@ -25,14 +32,14 @@ const AddTransactionForm = ({ setAdd }) => {
       console.log(result, "result of adding");
     } catch (error) {
       toast.error(`There was an ${error.name} error while adding new transaction`);
-      console.log(error);
+      throw error;
     }
   }
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
       <form
-        className="bg-white w-full max-w-lg rounded-lg shadow-lg p-6"
+        className="bg-white w-full max-w-xl rounded-lg shadow-lg p-6"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="space-y-4">
@@ -67,19 +74,22 @@ const AddTransactionForm = ({ setAdd }) => {
               </label>
               <div className="flex flex-row gap-x-3">
                 <Button
-                  classesList={`flex items-center justify-center gap-x-2 border w-full rounded-md border-gray-300 py-2 cursor-pointer`}
+                  classesList={`flex items-center justify-center gap-x-2 border w-full rounded-md border-gray-300 py-2 cursor-pointer font-medium ${selectedType === "Expense" ? "bg-red-100 text-red-500 border-red-500" : ""}`}
                   type="button"
+                  onClick={() => setValue("type", "Expense")}
                 >
                   <ArrowDownToLine size={16} color="red" />
                   Expense
                 </Button>
                 <Button
-                  classesList={`flex items-center justify-center gap-x-2 border w-full rounded-md border-gray-300 py-2 cursor-pointer`}
+                  classesList={`flex items-center justify-center gap-x-2 border w-full rounded-md border-gray-300 py-2 cursor-pointer font-medium ${selectedType === "Income" ? "bg-green-100 text-green-500 border-green-500" : ""}`}
                   type="button"
+                  onClick={() => setValue("type", "Income")}
                 >
                   <MoveUpRight size={16} color="green" />
                   Income
                 </Button>
+                <input type="hidden" {...register("type")} />
               </div>
             </div>
             <div className="flex flex-col w-full relative">
@@ -90,7 +100,7 @@ const AddTransactionForm = ({ setAdd }) => {
               <input
                 type="number"
                 className="border border-gray-300 pl-6 py-2 rounded-md outline-none focus:border-primary"
-                placeholder="00.0"
+                placeholder="0.00"
                 {...register("amount", { required: "Amount is required" })}
               />
             </div>

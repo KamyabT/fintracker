@@ -1,7 +1,8 @@
 import api from "./api";
-const token = localStorage.getItem("token");
 
 export async function getAllTransactions() {
+  const token = localStorage.getItem("token");
+
   const result = await api.get("/collections/transactions/records", {
     headers: {
       "Content-Type": "application/json",
@@ -12,6 +13,8 @@ export async function getAllTransactions() {
 }
 
 export async function getTransactions(page = 1, perPage = 5) {
+  const token = localStorage.getItem("token");
+
   const result = await api.get(
     `/collections/transactions/records?page=${page}&perPage=${perPage}`,
     {
@@ -25,13 +28,15 @@ export async function getTransactions(page = 1, perPage = 5) {
 }
 
 export async function addNewTransaction(data) {
+  const token = localStorage.getItem("token");
+
   try {
     const result = await api.post("/collections/transactions/records", data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(result , "result before returning")
+    console.log(result, "result before returning");
     return result;
   } catch (error) {
     console.log(error.response.data);

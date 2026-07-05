@@ -1,7 +1,10 @@
 import Button from "./ui/Button";
 import { Bell } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 const Header = ({ setAdd }) => {
+  const { user } = useAuth();
+
   function handleAddNewtrans() {
     setAdd(true);
   }
@@ -9,7 +12,7 @@ const Header = ({ setAdd }) => {
     <header className="mb-5">
       <div className="flex flex-row justify-between">
         <div className="flex flex-col ">
-          <h3 className="font-semibold text-xl mb-1">Good morning, Ali</h3>
+          <h3 className="font-semibold text-xl mb-1">Good morning, {user?.name || "Guest"}</h3>
           <span className="text-gray-500 text-sm font-normal">
             Here's what's happening with your finances today.
           </span>
@@ -25,9 +28,10 @@ const Header = ({ setAdd }) => {
           <div className="flex items-center justify-center me-4 cursor-pointer">
             <Bell />
           </div>
-          <div className="flex flex-row items-center">
+          <div className="flex flex-row items-center pe-2">
             <img src="#" alt="" />
-            <p>Ali Rezaie</p>
+            <p className="font-semibold me-2">{user?.name || "Guest"}</p>
+            <span>+</span>
           </div>
         </div>
       </div>
