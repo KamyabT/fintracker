@@ -2,8 +2,6 @@ import Button from "./Button";
 import { DollarSign, MoveUpRight, ArrowDownToLine } from "lucide-react";
 import { addNewTransaction } from "../../services/transactions";
 import { useForm } from "react-hook-form";
-import { data } from "autoprefixer";
-import { parse } from "date-fns";
 import toast from "react-hot-toast";
 
 const AddTransactionForm = ({ setAdd }) => {
@@ -26,6 +24,7 @@ const AddTransactionForm = ({ setAdd }) => {
       }
       console.log(result, "result of adding");
     } catch (error) {
+      toast.error(`There was an ${error.name} error while adding new transaction`);
       console.log(error);
     }
   }
@@ -107,7 +106,13 @@ const AddTransactionForm = ({ setAdd }) => {
                 id=""
                 {...register("category", { required: "Category is required" })}
               >
-                <option value="foodDining">Food & Dinning</option>
+                <option value="food">Food & Dinning</option>
+                <option value="grocery">Grocery</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="transportation">Transportation</option>
+                <option value="internet">Internet</option>
+                <option value="bills">Bills</option>
+                <option value="installments">Installments</option>
               </select>
             </div>
             <div className="flex flex-col w-full">

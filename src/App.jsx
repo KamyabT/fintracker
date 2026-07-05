@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import { AuthContextProvider } from "./context/AuthContext";
 import { TransactionsContextProvider } from "./context/TransactionsContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "./components/PublicRoute";
 
 function App() {
   return (
@@ -19,8 +20,22 @@ function App() {
           <Toaster position="bottom-right" reverseOrder={false} />
           <Routes>
             <Route path="/" element={<Navigate to="/login"></Navigate>}></Route>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/register" element={<Register />}></Route>
+            <Route
+              path="/login"
+              element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+              }
+            ></Route>
+            <Route
+              path="/register"
+              element={
+                <PublicRoute>
+                  <Register />
+                </PublicRoute>
+              }
+            ></Route>
             <Route
               path="/dashboard"
               element={

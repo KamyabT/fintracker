@@ -1,11 +1,10 @@
 import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
-
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       toast.error("You have to login before accessing this page");

@@ -1,4 +1,5 @@
 import Button from "./ui/Button";
+import { Bell } from "lucide-react";
 
 const Header = ({ setAdd }) => {
   function handleAddNewtrans() {
@@ -21,7 +22,9 @@ const Header = ({ setAdd }) => {
           >
             + Add Transaction
           </Button>
-          <div>notification</div>
+          <div className="flex items-center justify-center me-4 cursor-pointer">
+            <Bell />
+          </div>
           <div className="flex flex-row items-center">
             <img src="#" alt="" />
             <p>Ali Rezaie</p>
