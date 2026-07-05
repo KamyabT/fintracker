@@ -1,82 +1,6 @@
 import { useTransactions } from "../../context/TransactionsContext";
 import { Bar, BarChart, XAxis, YAxis, CartesianGrid } from "recharts";
-
-
-const data = [
-  {
-    name: "Page A",
-    uv: 40,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page A",
-    uv: 400,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page A",
-    uv: 60,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page A",
-    uv: 500,
-    pv: 5400,
-    amt: 2400,
-  },
-  {
-    name: "Page A",
-    uv: 400,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page A",
-    uv: 100,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page A",
-    uv: 400,
-    pv: 2400,
-    amt: 2400,
-  },
-
-  {
-    name: "Page B",
-    uv: 300,
-    pv: 4567,
-    amt: 2400,
-  },
-  {
-    name: "Page C",
-    uv: 300,
-    pv: 1398,
-    amt: 2400,
-  },
-  {
-    name: "Page D",
-    uv: 200,
-    pv: 9800,
-    amt: 2400,
-  },
-  {
-    name: "Page E",
-    uv: 278,
-    pv: 3908,
-    amt: 2400,
-  },
-  {
-    name: "Page F",
-    uv: 189,
-    pv: 4800,
-    amt: 2400,
-  },
-];
+import { isThisMonth, eachDayOfInterval, startOfMonth, lastDayOfMonth } from "date-fns";
 
 const margin = {
   top: 20,
@@ -102,11 +26,49 @@ const renderCustomBarLabel = ({ x, y, width, value }) => {
 };
 
 const ExpensesOverview = () => {
-
-
   const { allTransactions } = useTransactions();
   console.log("allTransactions", allTransactions);
+  const thisMonthTransactions = allTransactions?.filter(
+    (transaction) =>
+      isThisMonth(new Date(transaction.transactionDate)) &&
+      transaction.type === "Expense",
+  );
 
+  /***************************/
+
+  let start = startOfMonth(new Date());
+  let end = lastDayOfMonth(new Date());
+
+  const betweendays = eachDayOfInterval({
+    start: new Date(start),
+    end: new Date(end),
+  });
+
+  const days = betweendays.map((day) => day.getDate());
+  const Data = Array.from({ length: days.length }, (_, i) => i + 1);
+
+  const barData = [];
+  for (let i = 0; i < Data.length; i++) {
+    barData.push({
+      name: Data[i],
+      amount: 0,
+    });
+  }
+
+  // const ExpensesByDay = thisMonthTransactions.reduce((acc , transaction) =>{
+  //   const transactionDay = new Date(transaction.transactionDate).getDate();
+  //   acc[transactionDay] = (acc[transactionDay] || 0) + transaction.amount;
+  //   return acc;
+  // }, {});
+
+  thisMonthTransactions?.forEach((transaction) => {
+    const transactionDate = new Date(transaction.transactionDate);
+    const transactionDay = transactionDate.getDate();
+    const barItem = barData.find((item) => item.name === transactionDay);
+    if (barItem) {
+      barItem.amount += transaction.amount;
+    }
+  });
 
   return (
     <div className="bg-back-white space-y-6 px-4 py-4 rounded-md shadow-sm">
@@ -128,7 +90,7 @@ const ExpensesOverview = () => {
         </div>
       </div>
       <div className="">
-        <BarChart width="w-full" height={300} data={data} margin={margin}>
+        <BarChart width="w-full" height={300} data={barData} margin={margin}>
           <XAxis
             dataKey="name"
             tickFormatter={formatAxisTick}
@@ -143,7 +105,12 @@ const ExpensesOverview = () => {
             }}
           />
           <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-          <Bar dataKey="uv" fill="#4338ca" label={renderCustomBarLabel} barSize={25} />
+          <Bar
+            dataKey="amount"
+            fill="#4338ca"
+            label={renderCustomBarLabel}
+            barSize={25}
+          />
           {/* <RechartsDevtools /> */}
         </BarChart>
       </div>
