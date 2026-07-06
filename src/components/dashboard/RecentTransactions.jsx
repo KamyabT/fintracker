@@ -1,6 +1,6 @@
-import RecentTransactionsItem from "./RecentTransactionsItem";
+import TransactionsList from "../TransactionsList";
+import RecentTransactionsHeader from "./RecentTransactionsHeader";
 import { useTransactions } from "../../context/TransactionsContext";
-import { Link } from "react-router-dom";
 
 const RecentTransactions = () => {
   const { transactions, isLoading, setCurrentPage, currentPage, totalPages } =
@@ -17,26 +17,16 @@ const RecentTransactions = () => {
 
   return (
     <div className="bg-back-white px-4 py-4 rounded-md shadow-sm">
-      <div className="flex flex-row justify-between items-center mb-3">
-        <p className="text-[18px] font-semibold">Recent Transactions</p>
-        <Link
-          to="/transactions"
-          className="bg-back-white px-3 py-2 border border-gray-300 rounded-lg text-primary font-semibold text-[14px] hover:bg-primary hover:text-white cursor-pointer"
-        >
-          View All
-        </Link>
-      </div>
       {isLoading && (
         <div className="flex justify-center font-semibold text-[16px] text-gray-500">
           Loading recent transactions please wait...
         </div>
       )}
+      <RecentTransactionsHeader />
       {!isLoading && transactions?.length > 0 && (
         <div className="space-y-3">
           {transactions?.map((transaction) => {
-            return (
-              <RecentTransactionsItem transaction={transaction} key={transaction.id} />
-            );
+            return <TransactionsList transaction={transaction} key={transaction.id} />;
           })}
         </div>
       )}

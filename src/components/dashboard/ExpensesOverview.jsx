@@ -1,6 +1,6 @@
 import { useTransactions } from "../../context/TransactionsContext";
 import { Bar, BarChart, XAxis, YAxis, CartesianGrid } from "recharts";
-import { isThisMonth, eachDayOfInterval, startOfMonth, lastDayOfMonth, getMonth , format } from "date-fns";
+import { isThisMonth, eachDayOfInterval, startOfMonth, lastDayOfMonth, format } from "date-fns";
 
 const margin = {
   top: 20,
@@ -63,8 +63,6 @@ const ExpensesOverview = () => {
             id=""
           >
             <option value="month">{format((new Date()), "MMMM , yyy")}</option>
-            {/* <option value="week">May 2026</option>
-            <option value="day">May 2026</option> */}
           </select>
         </div>
       </div>

@@ -1,14 +1,13 @@
 import { CircleArrowDown, CircleArrowUp } from "lucide-react";
 import { format } from "date-fns";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
-const RecentTransactionsItem = ({ transaction }) => {
-  const { transactionName, transactionDate, type, amount , expand} = transaction;
+
+const TransactionsList = ({ transaction }) => {
+  const { transactionName, transactionDate, type, amount, expand } = transaction;
   const { user } = useAuth();
-
-
   return (
-    <div className="grid grid-cols-[50px_1fr_1fr_1.5fr_1fr_1fr] border-b-1 border-gray-100 py-2">
+    <div className="grid grid-cols-[50px_1fr_1fr_1.5fr_1fr_1fr] border-b-1 border-gray-100 py-3 mb-0">
       <div className="flex items-center">
         {type === "Income" ? (
           <CircleArrowUp color="#2bc417" size={32} />
@@ -18,7 +17,9 @@ const RecentTransactionsItem = ({ transaction }) => {
       </div>
       <div className="flex flex-col justify-start  col-start-2 col-end-4 ">
         <p className="font-semibold">{transactionName}</p>
-        <span className="font-semibold text-sm text-gray-500">{expand.category.name}</span>
+        <span className="font-semibold text-[12px] text-gray-500">
+          {expand.category.name}
+        </span>
       </div>
       <div className="flex flex-row justify-center space-x-3">
         <span className="font-medium text-[14px] flex items-center text-gray-500">
@@ -48,4 +49,4 @@ const RecentTransactionsItem = ({ transaction }) => {
   );
 };
 
-export default RecentTransactionsItem;
+export default TransactionsList;

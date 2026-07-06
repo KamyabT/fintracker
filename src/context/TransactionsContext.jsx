@@ -1,5 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getTransactions, getAllTransactions } from "../services/transactions";
+import {
+  getTransactions,
+  getAllTransactions,
+  getCategories,
+} from "../services/transactions";
 import toast from "react-hot-toast";
 
 const TransactionsContext = createContext();
@@ -8,10 +12,10 @@ export function TransactionsContextProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [allTransactions, setAllTransactions] = useState([]);
+  const [allCategories, setAllCategories] = useState([]);
   const [transactions, setTransactions] = useState([]);
 
   const [add, setAdd] = useState(false);
-
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -22,6 +26,13 @@ export function TransactionsContextProvider({ children }) {
     async function getTransactionsList() {
       setIsLoading(true);
       setError(null);
+
+      try {
+        const allCategories = await getCategories();
+        setAllCategories(allCategories);
+      } catch (error) {
+        console.log(error);
+      }
 
       try {
         const allDatas = await getAllTransactions();
@@ -59,6 +70,7 @@ export function TransactionsContextProvider({ children }) {
         totalPages,
         currentPage,
         allTransactions,
+        allCategories,
         setAdd,
         setCurrentPage,
       }}

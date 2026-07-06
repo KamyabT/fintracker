@@ -1,17 +1,19 @@
 import Button from "./Button";
-import { DollarSign, MoveUpRight, ArrowDownToLine } from "lucide-react";
+import { DollarSign, MoveUpRight, ArrowDownToLine, CircleX } from "lucide-react";
 import { addNewTransaction } from "../../services/transactions";
 import { useTransactions } from "../../context/TransactionsContext";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const AddTransactionForm = () => {
-  const { add, setAdd} = useTransactions();
+  const { setAdd, allCategories } = useTransactions();
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       type: "expense",
     },
   });
+
+  console.log(allCategories, "all categories");
 
   const selectedType = watch("type");
 
@@ -24,14 +26,12 @@ const AddTransactionForm = () => {
   async function onSubmit(data) {
     const transactionDate = new Date(`${data.date}T${data.time}`).toISOString();
     const finalData = { ...data, user: userId, transactionDate: transactionDate };
-    console.log(finalData, "final data");
     try {
       const result = await addNewTransaction(finalData);
       if (result.status === 200) {
         setAdd(false);
         toast.success("Transcaction added successfully");
       }
-      console.log(result, "result of adding");
     } catch (error) {
       toast.error(`There was an ${error.name} error while adding new transaction`);
       throw error;
@@ -53,7 +53,7 @@ const AddTransactionForm = () => {
               </span>
             </div>
             <div className="cursor-pointer" onClick={handleAddTransactionForm}>
-              X
+              <CircleX color="red"/>
             </div>
           </div>
           <div className="flex flex-col">
@@ -118,13 +118,9 @@ const AddTransactionForm = () => {
                 id=""
                 {...register("category", { required: "Category is required" })}
               >
-                <option value="food">Food & Dinning</option>
-                <option value="grocery">Grocery</option>
-                <option value="entertainment">Entertainment</option>
-                <option value="transportation">Transportation</option>
-                <option value="internet">Internet</option>
-                <option value="bills">Bills</option>
-                <option value="installments">Installments</option>
+                {allCategories.data.items.map((category) => {
+                  return <option value={`${category.id}`}>{category.name}</option>;
+                })}
               </select>
             </div>
             <div className="flex flex-col w-full">

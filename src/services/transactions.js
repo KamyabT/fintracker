@@ -12,6 +12,12 @@ export async function getTransactions(page = 1, perPage = 5) {
   return result;
 }
 
+export async function getCategories(){
+  const result = await api.get(`collections/categories/records`)
+  console.log(result , "categories")
+  return result
+}
+
 export async function addNewTransaction(data) {
   try {
     const result = await api.post("/collections/transactions/records", data);

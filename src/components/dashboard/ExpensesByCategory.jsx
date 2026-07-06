@@ -9,44 +9,45 @@ import {
   useActiveTooltipDataPoints,
   useIsTooltipActive,
 } from "recharts";
+import { useTransactionsCalculations } from "../../hooks/useTransactionsCalculations";
 
 // #endregion
 const RADIAN = Math.PI / 180;
-// const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const ExpensesByCategory = () => {
   const { user } = useAuth();
-  const { allTransactions } = useTransactions();
+  const {finalData , totalAmount} = useTransactionsCalculations()
+  // const { allTransactions } = useTransactions();
 
-  console.log(allTransactions, "all");
-  const thisMonth = allTransactions?.filter((transaction) =>
-    isThisMonth(transaction.transactionDate),
-  );
+  // const thisMonth = allTransactions?.filter((transaction) =>
+  //   isThisMonth(transaction.transactionDate),
+  // );
 
-  const sortedBycate = (thisMonth ?? []).reduce((acc, transaction) => {
-    const { name, color } = transaction.expand.category;
+  // const sortedBycate = (thisMonth ?? []).reduce((acc, transaction) => {
+  //   const { name, color } = transaction.expand.category;
 
-    if (!acc[name]) {
-      acc[name] = {
-        amount: 0,
-        color,
-      };
-    }
+  //   if (!acc[name]) {
+  //     acc[name] = {
+  //       amount: 0,
+  //       color,
+  //     };
+  //   }
 
-    acc[name].amount += transaction.amount;
+  //   acc[name].amount += transaction.amount;
 
-    return acc;
-  }, {});
+  //   return acc;
+  // }, {});
 
-  const finalData = Object.entries(sortedBycate).map(([name, data]) => ({
-    name,
-    amount: data.amount,
-    color: data.color,
-  }));
+  // const finalData = Object.entries(sortedBycate).map(([name, data]) => ({
+  //   name,
+  //   amount: data.amount,
+  //   color: data.color,
+  // }));
 
-  const totalAmount = finalData.reduce((acc, transaction) => {
-    return acc + transaction.amount;
-  }, 0);
+  // const totalAmount = finalData.reduce((acc, transaction) => {
+  //   return acc + transaction.amount;
+  // }, 0);
+
   /****************Pie Chart******************/
 
   const renderCustomizedLabel = ({
@@ -80,7 +81,6 @@ const ExpensesByCategory = () => {
   };
 
   const MyCustomPie = (props) => {
-    console.log(props, "sector props");
     const p = useActiveTooltipDataPoints();
     const isAnyPieActive = useIsTooltipActive();
     const isThisPieActive = isAnyPieActive && props.payload === p?.[0];
@@ -105,7 +105,7 @@ const ExpensesByCategory = () => {
     <div className="bg-back-white px-4 py-4 rounded-md flex flex-col shadow-sm">
       <div className="flex flex-row items-center">
         <p className="text-[18px] font-semibold">Expenses by Category</p>
-        <span className="ms-2 text-sm text-gray-500">(current Month)</span>
+        <span className="ms-2 text-sm text-gray-500">(This Month)</span>
       </div>
       <div className="flex flex-row justify-between items-center">
         <div className="w-full">
