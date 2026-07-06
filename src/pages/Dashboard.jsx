@@ -1,17 +1,18 @@
-import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import StatsBox from "../components/dashboard/StatsBox";
 import ExpensesOverview from "../components/dashboard/ExpensesOverview";
 import ExpensesByCategory from "../components/dashboard/ExpensesByCategory";
 import RecentTransactions from "../components/dashboard/RecentTransactions";
 import MonthSummary from "../components/dashboard/MonthSummary";
+import { useTransactions } from "../context/TransactionsContext";
 import { useTransactionStats } from "../hooks/useTransactionStats";
 import { CircleDollarSign, Wallet, PiggyBank } from "lucide-react";
 import Header from "../components/Header";
 import AddTransactionForm from "../components/ui/AddTransactionForm";
 
 const Dashboard = () => {
-  const { totalIncome, totalExpenses, netBalance, savingRate, add, setAdd } = useTransactionStats();
+  const { totalIncome, totalExpenses, netBalance, savingRate } = useTransactionStats();
+  const { add } = useTransactions();
 
   const stats = [
     {
@@ -39,7 +40,7 @@ const Dashboard = () => {
   return (
     <div className="flex flex-row bg-back-secondary ">
       <Sidebar />
-      <main className="flex-1 px-5 py-5">
+      <main className="flex-1 flex-wrap px-5 py-5">
         {add && <AddTransactionForm />}
         <Header />
         <section className="grid gap-4 md:grid-cols-4">

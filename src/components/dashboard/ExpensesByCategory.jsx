@@ -1,3 +1,7 @@
+import { useAuth } from "../../context/AuthContext";
+import { useTransactions } from "../../context/TransactionsContext";
+import { isThisMonth } from "date-fns";
+import ExpensesCategoryByItem from "./ExpensesByCategoryItem";
 import {
   Pie,
   PieChart,
@@ -6,19 +10,45 @@ import {
   useIsTooltipActive,
 } from "recharts";
 
-// #region Sample data
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
-
 // #endregion
 const RADIAN = Math.PI / 180;
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+// const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const ExpensesByCategory = () => {
+  const { user } = useAuth();
+  const { allTransactions } = useTransactions();
+
+  console.log(allTransactions, "all");
+  const thisMonth = allTransactions?.filter((transaction) =>
+    isThisMonth(transaction.transactionDate),
+  );
+
+  const sortedBycate = (thisMonth ?? []).reduce((acc, transaction) => {
+    const { name, color } = transaction.expand.category;
+
+    if (!acc[name]) {
+      acc[name] = {
+        amount: 0,
+        color,
+      };
+    }
+
+    acc[name].amount += transaction.amount;
+
+    return acc;
+  }, {});
+
+  const finalData = Object.entries(sortedBycate).map(([name, data]) => ({
+    name,
+    amount: data.amount,
+    color: data.color,
+  }));
+
+  const totalAmount = finalData.reduce((acc, transaction) => {
+    return acc + transaction.amount;
+  }, 0);
+  /****************Pie Chart******************/
+
   const renderCustomizedLabel = ({
     cx,
     cy,
@@ -50,6 +80,7 @@ const ExpensesByCategory = () => {
   };
 
   const MyCustomPie = (props) => {
+    console.log(props, "sector props");
     const p = useActiveTooltipDataPoints();
     const isAnyPieActive = useIsTooltipActive();
     const isThisPieActive = isAnyPieActive && props.payload === p?.[0];
@@ -62,7 +93,8 @@ const ExpensesByCategory = () => {
     return (
       <Sector
         {...props}
-        fill={COLORS[props.index % COLORS.length]}
+        // fill={COLORS[props.index % COLORS.length]}
+        fill={`#${props.color}`}
         fillOpacity={fillOpacity}
         style={{ transition: "fill-opacity 0.3s ease" }}
       />
@@ -71,8 +103,9 @@ const ExpensesByCategory = () => {
 
   return (
     <div className="bg-back-white px-4 py-4 rounded-md flex flex-col shadow-sm">
-      <div>
+      <div className="flex flex-row items-center">
         <p className="text-[18px] font-semibold">Expenses by Category</p>
+        <span className="ms-2 text-sm text-gray-500">(current Month)</span>
       </div>
       <div className="flex flex-row justify-between items-center">
         <div className="w-full">
@@ -86,52 +119,27 @@ const ExpensesByCategory = () => {
             responsive
           >
             <Pie
-              data={data}
+              data={finalData}
               labelLine={false}
               label={renderCustomizedLabel}
               fill="#8884d8"
-              dataKey="value"
-              // isAnimationActive={isAnimationActive}
+              dataKey="amount"
               shape={MyCustomPie}
             />
           </PieChart>
         </div>
         <div className="flex flex-col pe-5">
           <div className="flex flex-col border-b-2 border-gray-200 mb-3 pb-2">
-            <div className="flex flex-row w-full space-x-10">
-              <span>0</span>
-              <p className="font-medium text-[14px] text-black-500">Housing</p>
-              <p className="font-medium text-[14px] text-black-500">$1,250.00</p>
-              <p className="font-medium text-[13px] text-black-500">40%</p>
-            </div>
-            <div className="flex flex-row  w-full space-x-10">
-              <span>0</span>
-              <p className="font-medium text-[14px] text-black-500">Housing</p>
-              <p className="font-medium text-[14px] text-black-500">$1,250.00</p>
-              <p className="font-medium text-[13px] text-black-500">40%</p>
-            </div>
-            <div className="flex flex-row  w-full space-x-10">
-              <span>0</span>
-              <p className="font-medium text-[14px] text-black-500">Housing</p>
-              <p className="font-medium text-[14px] text-black-500">$1,250.00</p>
-              <p className="font-medium text-[13px] text-black-500">40%</p>
-            </div>
-            <div className="flex flex-row w-full space-x-10">
-              <span>0</span>
-              <p className="font-medium text-[14px] text-black-500">Housing</p>
-              <p className="font-medium text-[14px] text-black-500">$1,250.00</p>
-              <p className="font-medium text-[13px] text-black-500">40%</p>
-            </div>
-            <div className="flex flex-row w-full space-x-10">
-              <span>0</span>
-              <p className="font-medium text-[14px] text-black-500">Housing</p>
-              <p className="font-medium text-[14px] text-black-500">$1,250.00</p>
-              <p className="font-medium text-[13px] text-black-500">40%</p>
-            </div>
+            {finalData?.map((category) => {
+              return <ExpensesCategoryByItem data={category} key={category.name} />;
+            })}
           </div>
           <div className="flex flex-row w-full justify-between items-center">
             <p className="font-semibold">Total</p>
-            <p className="font-semibold">$3,120.50</p>
+            <p className="font-semibold">
+              {user.currency ? user.currency : "$"}
+              {totalAmount}
+            </p>
           </div>
         </div>
       </div>

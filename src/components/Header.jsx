@@ -5,16 +5,19 @@ import { useTransactions } from "../context/TransactionsContext";
 
 const Header = () => {
   const { user } = useAuth();
-  const { add, setAdd} = useTransactions();
+  const { add, setAdd } = useTransactions();
 
   function handleAddNewtrans() {
+    console.log("add clicked");
     setAdd(true);
   }
   return (
     <header className="mb-5">
-      <div className="flex flex-row justify-between">
-        <div className="flex flex-col ">
-          <h3 className="font-semibold text-xl mb-1">Good morning, {user?.name || "Guest"}</h3>
+      <div className="flex flex-row flex-wrap justify-between ">
+        <div className="flex flex-col mb-3 md:mb-0">
+          <h3 className="font-semibold text-xl mb-1">
+            Good morning, {user?.name || "Guest"}
+          </h3>
           <span className="text-gray-500 text-sm font-normal">
             Here's what's happening with your finances today.
           </span>

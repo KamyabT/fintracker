@@ -1,7 +1,7 @@
 import api from "./api";
 
 export async function getAllTransactions() {
-  const result = await api.get("/collections/transactions/records");
+  const result = await api.get("/collections/transactions/records?expand=category");
   return result;
 }
 
@@ -22,12 +22,3 @@ export async function addNewTransaction(data) {
   }
 }
 
-// {
-//   transactionName: "test",
-//   amount: 50,
-//   type: "Income",
-//   category: "food",
-//   transactionDate: "2026-06-27 19:28:24.000Z",
-//   description: "",
-//   user: "xgkdxl79ys7zsym",
-// }
