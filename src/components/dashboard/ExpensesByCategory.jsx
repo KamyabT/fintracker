@@ -97,41 +97,41 @@ const ExpensesByCategory = () => {
           </PieChart>
         </div>
         <div className="flex flex-col pe-5">
-          <div className="flex flex-col border-b-1 border-gray-100 mb-2 pb-2">
-            <div className="flex flex-row w-full space-x-5">
+          <div className="flex flex-col border-b-2 border-gray-200 mb-3 pb-2">
+            <div className="flex flex-row w-full space-x-10">
               <span>0</span>
-              <p>Housing</p>
-              <p>$1,250.00</p>
-              <p>40%</p>
+              <p className="font-medium text-[14px] text-black-500">Housing</p>
+              <p className="font-medium text-[14px] text-black-500">$1,250.00</p>
+              <p className="font-medium text-[13px] text-black-500">40%</p>
             </div>
-            <div className="flex flex-row  w-full space-x-5">
+            <div className="flex flex-row  w-full space-x-10">
               <span>0</span>
-              <p>Housing</p>
-              <p>$1,250.00</p>
-              <p>40%</p>
+              <p className="font-medium text-[14px] text-black-500">Housing</p>
+              <p className="font-medium text-[14px] text-black-500">$1,250.00</p>
+              <p className="font-medium text-[13px] text-black-500">40%</p>
             </div>
-            <div className="flex flex-row  w-full space-x-5">
+            <div className="flex flex-row  w-full space-x-10">
               <span>0</span>
-              <p>Housing</p>
-              <p>$1,250.00</p>
-              <p>40%</p>
+              <p className="font-medium text-[14px] text-black-500">Housing</p>
+              <p className="font-medium text-[14px] text-black-500">$1,250.00</p>
+              <p className="font-medium text-[13px] text-black-500">40%</p>
             </div>
-            <div className="flex flex-row w-full space-x-5">
+            <div className="flex flex-row w-full space-x-10">
               <span>0</span>
-              <p>Housing</p>
-              <p>$1,250.00</p>
-              <p>40%</p>
+              <p className="font-medium text-[14px] text-black-500">Housing</p>
+              <p className="font-medium text-[14px] text-black-500">$1,250.00</p>
+              <p className="font-medium text-[13px] text-black-500">40%</p>
             </div>
-            <div className="flex flex-row w-full space-x-5">
+            <div className="flex flex-row w-full space-x-10">
               <span>0</span>
-              <p>Housing</p>
-              <p>$1,250.00</p>
-              <p>40%</p>
+              <p className="font-medium text-[14px] text-black-500">Housing</p>
+              <p className="font-medium text-[14px] text-black-500">$1,250.00</p>
+              <p className="font-medium text-[13px] text-black-500">40%</p>
             </div>
           </div>
           <div className="flex flex-row w-full justify-between items-center">
-            <p>Total</p>
-            <p>$3,120.50</p>
+            <p className="font-semibold">Total</p>
+            <p className="font-semibold">$3,120.50</p>
           </div>
         </div>
       </div>

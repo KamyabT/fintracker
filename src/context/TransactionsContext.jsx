@@ -10,6 +10,9 @@ export function TransactionsContextProvider({ children }) {
   const [allTransactions, setAllTransactions] = useState([]);
   const [transactions, setTransactions] = useState([]);
 
+  const [add, setAdd] = useState(false);
+
+
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
@@ -50,12 +53,14 @@ export function TransactionsContextProvider({ children }) {
   return (
     <TransactionsContext.Provider
       value={{
+        add,
         isLoading,
         transactions,
         totalPages,
         currentPage,
-        setCurrentPage,
         allTransactions,
+        setAdd,
+        setCurrentPage,
       }}
     >
       {children}

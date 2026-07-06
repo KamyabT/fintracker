@@ -1,10 +1,12 @@
 import Button from "./Button";
 import { DollarSign, MoveUpRight, ArrowDownToLine } from "lucide-react";
 import { addNewTransaction } from "../../services/transactions";
+import { useTransactions } from "../../context/TransactionsContext";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const AddTransactionForm = ({ setAdd }) => {
+const AddTransactionForm = () => {
+  const { add, setAdd} = useTransactions();
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       type: "expense",

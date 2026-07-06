@@ -1,9 +1,11 @@
 import Button from "./ui/Button";
 import { Bell } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { useTransactions } from "../context/TransactionsContext";
 
-const Header = ({ setAdd }) => {
+const Header = () => {
   const { user } = useAuth();
+  const { add, setAdd} = useTransactions();
 
   function handleAddNewtrans() {
     setAdd(true);

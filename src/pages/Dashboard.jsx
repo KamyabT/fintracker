@@ -11,8 +11,7 @@ import Header from "../components/Header";
 import AddTransactionForm from "../components/ui/AddTransactionForm";
 
 const Dashboard = () => {
-  const { totalIncome, totalExpenses, netBalance, savingRate } = useTransactionStats();
-  const [add, setAdd] = useState(false);
+  const { totalIncome, totalExpenses, netBalance, savingRate, add, setAdd } = useTransactionStats();
 
   const stats = [
     {
@@ -41,8 +40,8 @@ const Dashboard = () => {
     <div className="flex flex-row bg-back-secondary ">
       <Sidebar />
       <main className="flex-1 px-5 py-5">
-        {add && <AddTransactionForm setAdd={setAdd} />}
-        <Header setAdd={setAdd} />
+        {add && <AddTransactionForm />}
+        <Header />
         <section className="grid gap-4 md:grid-cols-4">
           {stats.map((stat) => {
             return <StatsBox stat={stat} key={stat.title} />;
