@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { useAuth } from "../../context/AuthContext";
 
 const RecentTransactionsItem = ({ transaction }) => {
-  const { transactionName, category, transactionDate, type, amount } = transaction;
+  const { transactionName, transactionDate, type, amount , expand} = transaction;
   const { user } = useAuth();
 
 
@@ -18,7 +18,7 @@ const RecentTransactionsItem = ({ transaction }) => {
       </div>
       <div className="flex flex-col justify-start  col-start-2 col-end-4 ">
         <p className="font-semibold">{transactionName}</p>
-        <span className="font-semibold text-sm text-gray-500">{category}</span>
+        <span className="font-semibold text-sm text-gray-500">{expand.category.name}</span>
       </div>
       <div className="flex flex-row justify-center space-x-3">
         <span className="font-medium text-[14px] flex items-center text-gray-500">

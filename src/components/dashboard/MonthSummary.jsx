@@ -28,7 +28,7 @@ const MonthSummary = () => {
         <div className="flex flex-col bg-back-secondary shadow-xs mt-5 border-1 border-gray-100 rounded-lg p-5 space-y-3">
           <div className="flex flex-row justify-between ">
             <p className="font-semibold">Monthly Budget Progress</p>
-            <p>Edit Budget</p>
+            <p className="text-indigo-500 font-semibold text-[14px]">Edit Budget</p>
           </div>
           <div>Progress Bar</div>
           <div className="flex flex-row justify-between ">

@@ -1,21 +1,18 @@
 import api from "./api";
 
 export async function getAllTransactions() {
-
   const result = await api.get("/collections/transactions/records");
   return result;
 }
 
 export async function getTransactions(page = 1, perPage = 5) {
-
   const result = await api.get(
-    `/collections/transactions/records?page=${page}&perPage=${perPage}`,
+    `/collections/transactions/records?page=${page}&perPage=${perPage}&expand=category`,
   );
   return result;
 }
 
 export async function addNewTransaction(data) {
-
   try {
     const result = await api.post("/collections/transactions/records", data);
     return result;
