@@ -1,11 +1,11 @@
 import { useTransactions } from "../context/TransactionsContext";
 import { isThisMonth } from "date-fns";
 
-export function useTransactionsCalculations(){
+export function useTransactionsCalculations() {
   const { allTransactions } = useTransactions();
 
   const thisMonth = allTransactions?.filter((transaction) =>
-    isThisMonth(transaction.transactionDate),
+    isThisMonth(new Date(transaction.transactionDate)),
   );
 
   const sortedBycate = (thisMonth ?? []).reduce((acc, transaction) => {
@@ -30,6 +30,5 @@ export function useTransactionsCalculations(){
     return acc + transaction.amount;
   }, 0);
 
-
-    return {totalAmount , finalData}
+  return { totalAmount, finalData };
 }

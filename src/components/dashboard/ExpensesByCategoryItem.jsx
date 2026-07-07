@@ -1,6 +1,6 @@
 import { useAuth } from "../../context/AuthContext";
 
-const ExpensesCategoryByItem = ({ data }) => {
+const ExpensesCategoryByItem = ({ data, total }) => {
   const { user } = useAuth();
 
   return (
@@ -16,7 +16,9 @@ const ExpensesCategoryByItem = ({ data }) => {
         {user.currency ? user.currency : "$"}
         {data.amount}
       </p>
-      <p className="flex font-medium items-center text-[13px] text-black-500">40%</p>
+      <p className="flex font-medium items-center text-[13px] text-black-500">
+        %{((data.amount / total)*100).toFixed(0)}
+      </p>
     </div>
   );
 };

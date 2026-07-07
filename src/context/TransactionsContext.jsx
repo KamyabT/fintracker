@@ -20,7 +20,7 @@ export function TransactionsContextProvider({ children }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const perPage = 5;
+  const [perPage , setPerPage] = useState(5)
 
   useEffect(() => {
     async function getTransactionsList() {
@@ -28,38 +28,28 @@ export function TransactionsContextProvider({ children }) {
       setError(null);
 
       try {
-        const allCategories = await getCategories();
+        const [allCategories, allDatas, pageData] = await Promise.all([
+          getCategories(),
+          getAllTransactions(),
+          getTransactions(currentPage, perPage),
+        ]);
         setAllCategories(allCategories);
-      } catch (error) {
-        console.log(error);
-      }
-
-      try {
-        const allDatas = await getAllTransactions();
-        setAllTransactions(allDatas.data.items);
-      } catch (error) {
-        setError("Failed to load transactions");
-        toast.error("Failed to load transactions");
-      }
-
-      try {
-        const result = await getTransactions(currentPage, perPage);
-        const items = result.data.items;
+        setAllTransactions(allDatas.items);
+        const items = pageData.data.items;
 
         setTransactions(items);
-        setCurrentPage(result.data.page);
-        setTotalPages(result.data.totalPages);
-        setTotalItems(result.data.totalItems);
+        setCurrentPage(pageData.data.page);
+        setTotalPages(pageData.data.totalPages);
+        setTotalItems(pageData.data.totalItems);
       } catch (error) {
-        setError("Failed to load transactions");
-        toast.error("Failed to load transactions");
+        console.log(error);
       } finally {
         setIsLoading(false);
       }
     }
 
     getTransactionsList();
-  }, [currentPage]);
+  }, [currentPage, perPage]);
 
   return (
     <TransactionsContext.Provider
@@ -71,6 +61,7 @@ export function TransactionsContextProvider({ children }) {
         currentPage,
         allTransactions,
         allCategories,
+        setPerPage,
         setAdd,
         setCurrentPage,
       }}

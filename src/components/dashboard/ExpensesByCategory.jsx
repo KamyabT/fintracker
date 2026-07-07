@@ -16,37 +16,7 @@ const RADIAN = Math.PI / 180;
 
 const ExpensesByCategory = () => {
   const { user } = useAuth();
-  const {finalData , totalAmount} = useTransactionsCalculations()
-  // const { allTransactions } = useTransactions();
-
-  // const thisMonth = allTransactions?.filter((transaction) =>
-  //   isThisMonth(transaction.transactionDate),
-  // );
-
-  // const sortedBycate = (thisMonth ?? []).reduce((acc, transaction) => {
-  //   const { name, color } = transaction.expand.category;
-
-  //   if (!acc[name]) {
-  //     acc[name] = {
-  //       amount: 0,
-  //       color,
-  //     };
-  //   }
-
-  //   acc[name].amount += transaction.amount;
-
-  //   return acc;
-  // }, {});
-
-  // const finalData = Object.entries(sortedBycate).map(([name, data]) => ({
-  //   name,
-  //   amount: data.amount,
-  //   color: data.color,
-  // }));
-
-  // const totalAmount = finalData.reduce((acc, transaction) => {
-  //   return acc + transaction.amount;
-  // }, 0);
+  const { finalData, totalAmount } = useTransactionsCalculations();
 
   /****************Pie Chart******************/
 
@@ -131,7 +101,7 @@ const ExpensesByCategory = () => {
         <div className="flex flex-col pe-5">
           <div className="flex flex-col border-b-2 border-gray-200 mb-3 pb-2">
             {finalData?.map((category) => {
-              return <ExpensesCategoryByItem data={category} key={category.name} />;
+              return <ExpensesCategoryByItem data={category} key={category.name} total={totalAmount}/>;
             })}
           </div>
           <div className="flex flex-row w-full justify-between items-center">

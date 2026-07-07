@@ -1,33 +1,26 @@
 import TransactionsList from "../TransactionsList";
 import RecentTransactionsHeader from "./RecentTransactionsHeader";
 import { useTransactions } from "../../context/TransactionsContext";
+import { usePagination } from "../../hooks/usePagination";
 
 const RecentTransactions = () => {
-  const { transactions, isLoading, setCurrentPage, currentPage, totalPages } =
-    useTransactions();
+  const { transactions, isLoading , setPerPage} = useTransactions();
 
-  function handleChangePage(page) {
-    if (page < 1 || page > totalPages) {
-      return;
-    }
-    setCurrentPage(page);
-  }
-
-  const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
-
+  const { pages, currentPage, handleChangePage } = usePagination();
+  
   return (
     <div className="bg-back-white px-4 py-4 rounded-md shadow-sm">
-      {isLoading && (
-        <div className="flex justify-center font-semibold text-[16px] text-gray-500">
-          Loading recent transactions please wait...
-        </div>
-      )}
       <RecentTransactionsHeader />
       {!isLoading && transactions?.length > 0 && (
         <div className="space-y-3">
           {transactions?.map((transaction) => {
-            return <TransactionsList transaction={transaction} key={transaction.id} />;
+            return <TransactionsList transaction={transaction} key={transaction.id} setPerPage={setPerPage}/>;
           })}
+        </div>
+      )}
+      {isLoading && (
+        <div className="flex justify-center font-semibold text-[16px] text-gray-500">
+          Loading recent transactions please wait...
         </div>
       )}
       <div className="flex justify-center mt-5">
