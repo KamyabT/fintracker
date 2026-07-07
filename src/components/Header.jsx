@@ -16,7 +16,7 @@ const Header = () => {
       <div className="flex flex-row flex-wrap justify-between ">
         <div className="flex flex-col mb-3 md:mb-0">
           <h3 className="font-semibold text-xl mb-1">
-            Good morning, {user?.name || "Guest"}
+            Good morning, {user?.name || "Guest"}👋
           </h3>
           <span className="text-gray-500 text-sm font-normal">
             Here's what's happening with your finances today.
