@@ -5,12 +5,16 @@ import AddTransactionForm from "../components/ui/AddTransactionForm";
 import { useTransactions } from "../context/TransactionsContext";
 import TransactionsHeader from "../components/transactions/TransactionsHeader";
 import Pagination from "../components/ui/Pagination";
+import Modal from "../components/ui/Modal";
+import { useState } from "react";
 
 const Transactions = () => {
   const { transactions, isLoading, add, setAdd } = useTransactions();
+  const [modal, setModal] = useState(false);
 
   return (
     <div className="flex flex-row bg-back-secondary ">
+      {modal && <Modal />}
       {add && <AddTransactionForm />}
       <Sidebar />
       <main className="flex-1 px-5 py-5">
@@ -23,7 +27,11 @@ const Transactions = () => {
                 transactions?.length > 0 &&
                 transactions?.map((transaction) => {
                   return (
-                    <TransactionsList transaction={transaction} key={transaction.id} showActions={true}/>
+                    <TransactionsList
+                      transaction={transaction}
+                      key={transaction.id}
+                      showActions={true}
+                    />
                   );
                 })}
               {isLoading && (

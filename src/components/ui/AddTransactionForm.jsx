@@ -13,7 +13,6 @@ const AddTransactionForm = () => {
     },
   });
 
-  console.log(allCategories, "all categories");
 
   const selectedType = watch("type");
 
