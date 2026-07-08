@@ -1,20 +1,18 @@
 import TransactionsList from "../TransactionsList";
 import RecentTransactionsHeader from "./RecentTransactionsHeader";
 import { useTransactions } from "../../context/TransactionsContext";
-import { usePagination } from "../../hooks/usePagination";
+import Pagination from "../../components/ui/Pagination";
 
 const RecentTransactions = () => {
-  const { transactions, isLoading , setPerPage} = useTransactions();
+  const { transactions, isLoading } = useTransactions();
 
-  const { pages, currentPage, handleChangePage } = usePagination();
-  
   return (
     <div className="bg-back-white px-4 py-4 rounded-md shadow-sm">
       <RecentTransactionsHeader />
       {!isLoading && transactions?.length > 0 && (
         <div className="space-y-3">
           {transactions?.map((transaction) => {
-            return <TransactionsList transaction={transaction} key={transaction.id} setPerPage={setPerPage}/>;
+            return <TransactionsList transaction={transaction} key={transaction.id} />;
           })}
         </div>
       )}
@@ -23,33 +21,7 @@ const RecentTransactions = () => {
           Loading recent transactions please wait...
         </div>
       )}
-      <div className="flex justify-center mt-5">
-        <ul className="flex flex-row">
-          <li
-            className="border border-gray-300 rounded-md mx-2 px-2 cursor-pointer hover:bg-primary hover:text-white"
-            onClick={() => handleChangePage(currentPage - 1)}
-          >
-            {"<"}
-          </li>
-          {pages.map((page) => {
-            return (
-              <li
-                className={`${currentPage === page ? "bg-indigo-500 text-white" : "text-gray-500"} mx-2 px-2 cursor-pointer rounded-md text-[15px] hover:bg-indigo-500 hover:text-white active:bg-indigo-500 active:text-white`}
-                onClick={() => handleChangePage(page)}
-                key={page}
-              >
-                {page}
-              </li>
-            );
-          })}
-          <li
-            className="border border-gray-300 rounded-md mx-2 px-2 cursor-pointer hover:bg-primary hover:text-white"
-            onClick={() => handleChangePage(currentPage + 1)}
-          >
-            {">"}
-          </li>
-        </ul>
-      </div>
+      <Pagination />
     </div>
   );
 };

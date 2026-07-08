@@ -8,7 +8,6 @@ const Header = () => {
   const { add, setAdd } = useTransactions();
 
   function handleAddNewtrans() {
-    console.log("add clicked");
     setAdd(true);
   }
   return (

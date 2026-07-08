@@ -4,7 +4,7 @@ import SelectPerPage from "../ui/SelectPerPage";
 const TransactionsHeader = () => {
   return (
     <div className="flex flex-row justify-between items-center mb-3">
-      <p className="text-[18px] font-semibold">Recent Transactions</p>
+      <p className="text-[18px] font-semibold">All Transactions</p>
       <div className="flex items-center">
         <SelectPerPage />
         <Link
