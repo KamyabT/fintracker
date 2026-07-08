@@ -23,7 +23,7 @@ const Transactions = () => {
                 transactions?.length > 0 &&
                 transactions?.map((transaction) => {
                   return (
-                    <TransactionsList transaction={transaction} key={transaction.id} />
+                    <TransactionsList transaction={transaction} key={transaction.id} showActions={true}/>
                   );
                 })}
               {isLoading && (

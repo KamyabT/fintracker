@@ -1,13 +1,15 @@
 import { CircleArrowDown, CircleArrowUp } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "../context/AuthContext";
+import Button from "./ui/Button";
 
-
-const TransactionsList = ({ transaction }) => {
+const TransactionsList = ({ transaction, showActions }) => {
   const { transactionName, transactionDate, type, amount, expand } = transaction;
   const { user } = useAuth();
   return (
-    <div className="grid grid-cols-[50px_1fr_1fr_1.5fr_1fr_1fr] border-b-1 border-gray-100 py-3 mb-0">
+    <div
+      className={`grid ${showActions ? "grid-cols-[50px_1fr_1fr_1.5fr_1fr_1fr_150px]" : "grid-cols-[50px_1fr_1fr_1.5fr_1fr_1fr]"}  border-b-1 border-gray-100 py-3 mb-0`}
+    >
       <div className="flex items-center">
         {type === "Income" ? (
           <CircleArrowUp color="#2bc417" size={32} />
@@ -15,7 +17,7 @@ const TransactionsList = ({ transaction }) => {
           <CircleArrowDown color="#c41717" size={32} />
         )}
       </div>
-      <div className="flex flex-col justify-start  col-start-2 col-end-4 ">
+      <div className="flex flex-col justify-start col-start-2 col-end-4">
         <p className="font-semibold">{transactionName}</p>
         <span className="font-semibold text-[12px] text-gray-500">
           {expand.category.name}
@@ -36,7 +38,7 @@ const TransactionsList = ({ transaction }) => {
           {type}
         </span>
       </div>
-      <div className="flex justify-end ">
+      <div className="flex justify-center ">
         <span
           className={`${type === "Income" ? "text-state--success" : "text-state--danger"} font-bold text-[18px] flex items-center rounded-md`}
         >
@@ -45,6 +47,20 @@ const TransactionsList = ({ transaction }) => {
           {amount.toFixed(2)}
         </span>
       </div>
+      {showActions && (
+        <div className="flex items-center ms-5">
+          <Button
+            classesList={`me-3 px-3 py-2 border border-gray-300 rounded-lg text-primary font-semibold text-[14px] cursor-pointer`}
+          >
+            Edit
+          </Button>
+          <Button
+            classesList={`bg-back-danger-dark text-white px-3 py-2 border border-gray-300 rounded-lg  font-semibold text-[14px] cursor-pointer`}
+          >
+            Delete
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

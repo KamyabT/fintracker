@@ -12,7 +12,7 @@ const RecentTransactions = () => {
       {!isLoading && transactions?.length > 0 && (
         <div className="space-y-3">
           {transactions?.map((transaction) => {
-            return <TransactionsList transaction={transaction} key={transaction.id} />;
+            return <TransactionsList transaction={transaction} key={transaction.id} showActions={false}/>;
           })}
         </div>
       )}

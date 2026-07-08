@@ -7,16 +7,17 @@
   --color-primary-light: #5b5ff8;
   --color-primary-dark: #312e81;
 
-  
   /***************BG Colors********/
   --color-back-primary: #fdfdfd;
   --color-back-secondary: #f9fafc;
   --color-back-white: #fefefe;
 
-
   --color-back-danger: #fee2e2;
+  --color-back-danger-semiLight: #e54141;
+  --color-back-danger-dark: #e32222;
   --color-back-success: #d1fae5;
   --color-back-warning: #fef3c7;
+  --color-back-warning-dark: #ffcc00;
   --color-back-info: #dbeafe;
 
   /*************Sidebar*****************/
@@ -30,10 +31,3 @@
   --color-state--warning: #f59e0b;
   --color-state--info: #3b82f6;
 }
-
-/* --sidebar-bg: #1e1b4b;
---sidebar-bg-hover: #272c5a;
---sidebar-active: #4338ca; 
-  --color-primary-gradient: linear-gradient(135deg, #4338ca 0%, #5b5ff8 100%);
-
-*/
