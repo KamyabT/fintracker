@@ -31,6 +31,7 @@ const Transactions = () => {
                       transaction={transaction}
                       key={transaction.id}
                       showActions={true}
+                      setModal={setModal}
                     />
                   );
                 })}

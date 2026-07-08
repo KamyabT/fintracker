@@ -3,9 +3,19 @@ import { format } from "date-fns";
 import { useAuth } from "../context/AuthContext";
 import Button from "./ui/Button";
 
-const TransactionsList = ({ transaction, showActions }) => {
+const TransactionsList = ({ transaction, showActions, setModal }) => {
   const { transactionName, transactionDate, type, amount, expand } = transaction;
   const { user } = useAuth();
+
+  function handleDelete(transaction) {
+    console.log(transaction.id, "delete clicked");
+    setModal(true);
+  }
+
+  // function cancelDelete(transaction) {
+  //   setModal(false);
+  // }
+
   return (
     <div
       className={`grid ${showActions ? "grid-cols-[50px_1fr_1fr_1.5fr_1fr_1fr_150px]" : "grid-cols-[50px_1fr_1fr_1.5fr_1fr_1fr]"}  border-b-1 border-gray-100 py-3 mb-0`}
@@ -56,6 +66,7 @@ const TransactionsList = ({ transaction, showActions }) => {
           </Button>
           <Button
             classesList={`bg-back-danger-dark text-white px-3 py-2 border border-gray-300 rounded-lg  font-semibold text-[14px] cursor-pointer`}
+            onClick={() => handleDelete(transaction)}
           >
             Delete
           </Button>

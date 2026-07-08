@@ -20,7 +20,7 @@ export function TransactionsContextProvider({ children }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const [perPage , setPerPage] = useState(5)
+  const [perPage, setPerPage] = useState(5);
 
   useEffect(() => {
     async function getTransactionsList() {
@@ -37,9 +37,9 @@ export function TransactionsContextProvider({ children }) {
         setAllTransactions(allDatas.items);
 
         setTransactions(pageData.items);
-        setCurrentPage(pageData.data.page);
-        setTotalPages(pageData.data.totalPages);
-        setTotalItems(pageData.data.totalItems);
+        setCurrentPage(pageData.page);
+        setTotalPages(pageData.totalPages);
+        setTotalItems(pageData.totalItems);
       } catch (error) {
         console.log(error);
       } finally {

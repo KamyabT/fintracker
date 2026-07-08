@@ -4,8 +4,10 @@ import { addNewTransaction } from "../../services/transactions";
 import { useTransactions } from "../../context/TransactionsContext";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const AddTransactionForm = () => {
+  const [isEditing , setIsEditing] = useState(false)
   const { setAdd, allCategories } = useTransactions();
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
@@ -46,9 +48,9 @@ const AddTransactionForm = () => {
         <div className="space-y-4">
           <div className="flex flex-row justify-between">
             <div className="flex flex-col mb-1">
-              <h3 className="font-semibold text-xl mb-1">Add New Transaction</h3>
+              <h3 className="font-semibold text-xl mb-1">{isEditing ? "Editing transaction" : "Add New Transaction"}</h3>
               <span className="text-gray-500 text-sm font-normal ">
-                Record your income or expense.
+                {isEditing ? "" : "Record your income or expense."}
               </span>
             </div>
             <div className="cursor-pointer" onClick={handleAddTransactionForm}>
