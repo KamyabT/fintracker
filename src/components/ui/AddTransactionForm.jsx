@@ -118,7 +118,7 @@ const AddTransactionForm = () => {
                 id=""
                 {...register("category", { required: "Category is required" })}
               >
-                {allCategories.data.items.map((category) => {
+                {allCategories.items.map((category) => {
                   return <option value={`${category.id}`}>{category.name}</option>;
                 })}
               </select>

@@ -35,9 +35,8 @@ export function TransactionsContextProvider({ children }) {
         ]);
         setAllCategories(allCategories);
         setAllTransactions(allDatas.items);
-        const items = pageData.data.items;
 
-        setTransactions(items);
+        setTransactions(pageData.items);
         setCurrentPage(pageData.data.page);
         setTotalPages(pageData.data.totalPages);
         setTotalItems(pageData.data.totalItems);
