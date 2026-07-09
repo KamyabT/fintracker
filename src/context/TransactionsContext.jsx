@@ -3,6 +3,7 @@ import {
   getTransactions,
   getAllTransactions,
   getCategories,
+  deleteTransaction,
 } from "../services/transactions";
 import toast from "react-hot-toast";
 
@@ -50,6 +51,11 @@ export function TransactionsContextProvider({ children }) {
     getTransactionsList();
   }, [currentPage, perPage]);
 
+  async function handleDeleteTransaction(transaction) {
+    console.log(transaction, "handle in context");
+    const result = await deleteTransaction(transaction)
+  }
+
   return (
     <TransactionsContext.Provider
       value={{
@@ -63,6 +69,7 @@ export function TransactionsContextProvider({ children }) {
         setPerPage,
         setAdd,
         setCurrentPage,
+        handleDeleteTransaction,
       }}
     >
       {children}

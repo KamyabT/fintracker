@@ -30,3 +30,9 @@ export async function addNewTransaction(data) {
     throw error;
   }
 }
+
+
+export async function deleteTransaction (data){
+  const
+  console.log("delete runned")
+}
