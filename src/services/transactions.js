@@ -31,8 +31,8 @@ export async function addNewTransaction(data) {
   }
 }
 
-
-export async function deleteTransaction (data){
-  const
-  console.log("delete runned")
+export async function deleteTransaction(data) {
+  console.log("delete runned");
+  const result = await api.delete(`/collections/transactions/records/${data.id}`);
+  console.log(result, "delete res");
 }
