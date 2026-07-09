@@ -9,9 +9,9 @@ const TransactionsList = ({ transaction, showActions, setModal }) => {
   const {handleDeleteTransaction} = useTransactions()
   const { user } = useAuth();
 
-  function handleDelete(transaction) {
+  function handleShowModal(transaction) {
     console.log(transaction.id, "delete clicked");
-    handleDeleteTransaction(transaction)
+    // handleDeleteTransaction(transaction)
     setModal(true);
   }
 
@@ -69,7 +69,7 @@ const TransactionsList = ({ transaction, showActions, setModal }) => {
           </Button>
           <Button
             classesList={`bg-back-danger-dark text-white px-3 py-2 border border-gray-300 rounded-lg  font-semibold text-[14px] cursor-pointer`}
-            onClick={() => handleDelete(transaction)}
+            onClick={() => handleShowModal(transaction)}
           >
             Delete
           </Button>
