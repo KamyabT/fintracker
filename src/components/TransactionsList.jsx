@@ -3,12 +3,21 @@ import { format } from "date-fns";
 import { useAuth } from "../context/AuthContext";
 import Button from "./ui/Button";
 
-const TransactionsList = ({ transaction, showActions, setTransactionToDelete  }) => {
+const TransactionsList = ({
+  transaction,
+  showActions,
+  setTransactionToDelete,
+  setTransactionToEdit,
+}) => {
   const { transactionName, transactionDate, type, amount, expand } = transaction;
   const { user } = useAuth();
 
-  function handleShowModal(transaction) {
-    setTransactionToDelete(transaction)
+  function handleDeleteTransaction(transaction) {
+    setTransactionToDelete(transaction);
+  }
+
+  function handleEditTransaction(transaction){
+    setTransactionToEdit(transaction)
   }
 
   return (
@@ -56,12 +65,13 @@ const TransactionsList = ({ transaction, showActions, setTransactionToDelete  })
         <div className="flex items-center ms-5">
           <Button
             classesList={`me-3 px-3 py-2 border border-gray-300 rounded-lg text-primary font-semibold text-[14px] cursor-pointer`}
+            onClick={()=>handleEditTransaction(transaction)}
           >
             Edit
           </Button>
           <Button
             classesList={`bg-back-danger-dark text-white px-3 py-2 border border-gray-300 rounded-lg  font-semibold text-[14px] cursor-pointer`}
-            onClick={() => handleShowModal(transaction)}
+            onClick={() => handleDeleteTransaction(transaction)}
           >
             Delete
           </Button>

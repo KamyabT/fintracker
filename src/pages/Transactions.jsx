@@ -8,10 +8,11 @@ import Pagination from "../components/ui/Pagination";
 import Modal from "../components/ui/Modal";
 import { useState } from "react";
 
-
 const Transactions = () => {
-  const { transactions, isLoading, add, setAdd, handleDeleteTransaction } = useTransactions();
+  const { transactions, isLoading, add, setAdd, handleDeleteTransaction } =
+    useTransactions();
   const [transactionToDelete, setTransactionToDelete] = useState(null);
+  const [transactionToEdit, setTransactionToEdit] = useState(null);
 
   async function handleConfirmDelete() {
     await handleDeleteTransaction(transactionToDelete);
@@ -22,12 +23,23 @@ const Transactions = () => {
     setTransactionToDelete(null);
   }
 
+  function handleCancelEdit() {
+    setTransactionToEdit(null);
+    setAdd(false);
+  }
+
   return (
     <div className="flex flex-row bg-back-secondary ">
       {transactionToDelete && (
         <Modal onYes={handleConfirmDelete} onCancel={handleCancelDelete} />
       )}
       {add && <AddTransactionForm />}
+      {transactionToEdit && (
+        <AddTransactionForm
+          transactionToEdit={transactionToEdit}
+          onCancelEdit={handleCancelEdit}
+        />
+      )}
       <Sidebar />
       <main className="flex-1 px-5 py-5">
         <Header setAdd={setAdd} />
@@ -44,6 +56,7 @@ const Transactions = () => {
                       key={transaction.id}
                       showActions={true}
                       setTransactionToDelete={setTransactionToDelete}
+                      setTransactionToEdit={setTransactionToEdit}
                     />
                   );
                 })}

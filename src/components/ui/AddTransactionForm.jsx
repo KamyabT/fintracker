@@ -6,15 +6,14 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useState } from "react";
 
-const AddTransactionForm = () => {
-  const [isEditing , setIsEditing] = useState(false)
+const AddTransactionForm = ({transactionToEdit , onCancelEdit}) => {
+  const [isEditing, setIsEditing] = useState(false);
   const { setAdd, allCategories } = useTransactions();
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       type: "expense",
     },
   });
-
 
   const selectedType = watch("type");
 
@@ -48,13 +47,15 @@ const AddTransactionForm = () => {
         <div className="space-y-4">
           <div className="flex flex-row justify-between">
             <div className="flex flex-col mb-1">
-              <h3 className="font-semibold text-xl mb-1">{isEditing ? "Editing transaction" : "Add New Transaction"}</h3>
+              <h3 className="font-semibold text-xl mb-1">
+                {isEditing ? "Editing transaction" : "Add New Transaction"}
+              </h3>
               <span className="text-gray-500 text-sm font-normal ">
                 {isEditing ? "" : "Record your income or expense."}
               </span>
             </div>
             <div className="cursor-pointer" onClick={handleAddTransactionForm}>
-              <CircleX color="red"/>
+              <CircleX color="red" />
             </div>
           </div>
           <div className="flex flex-col">
@@ -92,7 +93,10 @@ const AddTransactionForm = () => {
                   <MoveUpRight size={16} color="green" />
                   Income
                 </Button>
-                <input type="hidden" {...register("type")} />
+                <input
+                  type="hidden"
+                  {...register("type", { required: "Transaction type is required" })}
+                />
               </div>
             </div>
             <div className="flex flex-col w-full relative">

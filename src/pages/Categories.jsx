@@ -1,3 +1,4 @@
+import AddCategoriesForm from "../components/categories/AddCategoriesForm";
 import Sidebar from "../components/Sidebar";
 
 const Categories = () => {
@@ -6,6 +7,7 @@ const Categories = () => {
       <Sidebar />
       <main className="flex-1 px-5 py-5">
         <h1>hello categories</h1>
+        <AddCategoriesForm />
       </main>
     </div>
   );

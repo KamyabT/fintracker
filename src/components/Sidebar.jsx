@@ -85,7 +85,7 @@ const Sidebar = () => {
           </nav>
         </div>
         <nav>
-          <Link
+          <NavLink
             className={({ isActive }) =>
               `flex space-x-3 py-3 px-4 text-white ${!isActive ? "hover:bg-back-sidebar-hover" : ""} hover:rounded-md w-full font-normal ${isActive ? "bg-back-sidebar-active rounded-md" : ""}`
             }
@@ -93,7 +93,7 @@ const Sidebar = () => {
           >
             <Settings className="" />
             <span>Settings</span>
-          </Link>
+          </NavLink>
           <Button
             classesList="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md w-full cursor-pointer"
             onClick={handleLogOut}
