@@ -23,10 +23,6 @@ const Transactions = () => {
     setTransactionToDelete(null);
   }
 
-  function handleCancelEdit() {
-    setTransactionToEdit(null);
-    setAdd(false);
-  }
 
   return (
     <div className="flex flex-row bg-back-secondary ">
@@ -37,7 +33,6 @@ const Transactions = () => {
       {transactionToEdit && (
         <AddTransactionForm
           transactionToEdit={transactionToEdit}
-          onCancelEdit={handleCancelEdit}
         />
       )}
       <Sidebar />

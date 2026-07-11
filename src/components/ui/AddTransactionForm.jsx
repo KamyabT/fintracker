@@ -5,8 +5,9 @@ import { useTransactions } from "../../context/TransactionsContext";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import { format } from "date-fns";
 
-const AddTransactionForm = ({transactionToEdit , onCancelEdit}) => {
+const AddTransactionForm = ({ transactionToEdit }) => {
   const [isEditing, setIsEditing] = useState(false);
   const { setAdd, allCategories } = useTransactions();
   const { register, handleSubmit, watch, setValue } = useForm({
@@ -65,6 +66,7 @@ const AddTransactionForm = ({transactionToEdit , onCancelEdit}) => {
             <input
               className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
               type="text"
+              value={transactionToEdit ? transactionToEdit.transactionName : ""}
               placeholder="Transaction Name"
               {...register("transactionName", {
                 required: "Transaction Name is required",
@@ -107,6 +109,7 @@ const AddTransactionForm = ({transactionToEdit , onCancelEdit}) => {
               <input
                 type="number"
                 className="border border-gray-300 pl-6 py-2 rounded-md outline-none focus:border-primary"
+                value={transactionToEdit ? transactionToEdit.amount : ""}
                 placeholder="0.00"
                 {...register("amount", { required: "Amount is required" })}
               />
@@ -120,11 +123,16 @@ const AddTransactionForm = ({transactionToEdit , onCancelEdit}) => {
               <select
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
                 name=""
+                value={transactionToEdit ? transactionToEdit.expand.category.name : ""}
                 id=""
                 {...register("category", { required: "Category is required" })}
               >
                 {allCategories.items.map((category) => {
-                  return <option value={`${category.id}`}>{category.name}</option>;
+                  return (
+                    <option value={`${category.id}`} key={category.id}>
+                      {category.name}
+                    </option>
+                  );
                 })}
               </select>
             </div>
@@ -135,6 +143,7 @@ const AddTransactionForm = ({transactionToEdit , onCancelEdit}) => {
               <select
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
                 name=""
+                value={transactionToEdit ? transactionToEdit.type : ""}
                 id=""
                 {...register("paymentAccount", {
                   required: "Payment Account is required",
@@ -151,6 +160,7 @@ const AddTransactionForm = ({transactionToEdit , onCancelEdit}) => {
             <input
               className="border border-gray-300 outline-none w-full rounded-md px-3 py-2 focus:border-primary"
               type="text"
+              value={transactionToEdit ? transactionToEdit.description : ""}
               placeholder="What was this transaction for?"
               {...register("description")}
             />
@@ -162,6 +172,7 @@ const AddTransactionForm = ({transactionToEdit , onCancelEdit}) => {
               </label>
               <input
                 type="date"
+                value={transactionToEdit ? transactionToEdit.transactionDate : ""}
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
                 {...register("date", { required: "Transaction date is required" })}
               />
@@ -172,6 +183,11 @@ const AddTransactionForm = ({transactionToEdit , onCancelEdit}) => {
               </label>
               <input
                 type="time"
+                value={
+                  transactionToEdit
+                    ? format(new Date(transactionToEdit.transactionDate), "HH:mm")
+                    : ""
+                }
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
                 {...register("time", { required: "Transaction time is required" })}
               />
