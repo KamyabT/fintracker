@@ -26,7 +26,7 @@ const Sidebar = () => {
 
   return (
     <aside className={`bg-back-sidebar-primary ${style.aside}`}>
-      <div className="flex flex-col justify-between h-screen p-3">
+      <div className="flex flex-col justify-between p-3 h-screen sticky top-0">
         <div className="">
           <div className="flex items-center justify-center my-5">
             <img
