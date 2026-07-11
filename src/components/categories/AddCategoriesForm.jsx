@@ -2,12 +2,17 @@ import { DollarSign, MoveUpRight, ArrowDownToLine, CircleX } from "lucide-react"
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 
-const AddCategoriesForm = () => {
+const AddCategoriesForm = ({ setShowCategoryForm }) => {
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       type: "expense",
     },
   });
+
+  function handleCloseCategoryForm() {
+    setShowCategoryForm(false);
+  }
+
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
       <form className="bg-white w-full max-w-xl rounded-lg shadow-lg p-6">
@@ -23,7 +28,7 @@ const AddCategoriesForm = () => {
                 Create a new category to track your transactions
               </span>
             </div>
-            <div className="cursor-pointer">
+            <div className="cursor-pointer" onClick={handleCloseCategoryForm}>
               <CircleX color="red" />
             </div>
           </div>
@@ -106,6 +111,7 @@ const AddCategoriesForm = () => {
           <div className="flex flex-row justify-end mt-10">
             <Button
               classesList={`bg-gray-300 px-3 py-2 rounded-lg me-3 cursor-pointer hover:bg-red-500 hover:text-white`}
+              onClick={handleCloseCategoryForm}
             >
               Cancel
             </Button>
