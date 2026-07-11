@@ -55,10 +55,7 @@ export function TransactionsContextProvider({ children }) {
     try {
       await deleteTransaction(transaction);
       toast.success("Transaction deleted successfully!");
-      // refetch to update the list
-      // hint: trigger useEffect by changing a state it depends on
-      // or call fetchTransactions directly
-      setCurrentPage(1); // this triggers useEffect to refetch
+      setCurrentPage(1);
     } catch (error) {
       toast.error("Failed to delete transaction");
       console.log(error);

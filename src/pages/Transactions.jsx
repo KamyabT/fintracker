@@ -14,12 +14,12 @@ const Transactions = () => {
   const [transactionToDelete, setTransactionToDelete] = useState(null);
 
   async function handleConfirmDelete() {
-    await handleDeleteTransaction(transactionToDelete); // delete it
-    setTransactionToDelete(null); // close modal
+    await handleDeleteTransaction(transactionToDelete);
+    setTransactionToDelete(null);
   }
 
   function handleCancelDelete() {
-    setTransactionToDelete(null); // just close modal
+    setTransactionToDelete(null);
   }
 
   return (

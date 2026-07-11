@@ -2,18 +2,14 @@ import { CircleArrowDown, CircleArrowUp } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from "../context/AuthContext";
 import Button from "./ui/Button";
-// import { useTransactions } from "../context/TransactionsContext";
 
 const TransactionsList = ({ transaction, showActions, setTransactionToDelete  }) => {
   const { transactionName, transactionDate, type, amount, expand } = transaction;
   const { user } = useAuth();
 
   function handleShowModal(transaction) {
-    console.log(transaction.id, "delete clicked");
     setTransactionToDelete(transaction)
   }
-
-
 
   return (
     <div
