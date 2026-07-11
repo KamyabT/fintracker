@@ -1,4 +1,4 @@
-import { Link , useNavigate} from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import style from "./Sidebar.module.css";
 import {
   House,
@@ -20,7 +20,7 @@ const Sidebar = () => {
 
   function handleLogOut() {
     logout();
-    toast.success("You have successfully logged out, see you soon!")
+    toast.success("You have successfully logged out, see you soon!");
     navigate("/");
   }
 
@@ -36,47 +36,59 @@ const Sidebar = () => {
             />
           </div>
           <nav className="flex flex-col w-full gap-y-3">
-            <Link
-              className="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md w-full font-normal"
+            <NavLink
+              className={({ isActive }) =>
+                `flex space-x-3 py-3 px-4 text-white ${!isActive ? "hover:bg-back-sidebar-hover" : ""} hover:rounded-md w-full font-normal ${isActive ? "bg-back-sidebar-active rounded-md" : ""}`
+              }
               to="/dashboard"
             >
               <House className="flex justify-center items-center" />
               Dashboard
               <span></span>
-            </Link>
-            <Link
-              className="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md"
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                `flex space-x-3 py-3 px-4 text-white ${!isActive ? "hover:bg-back-sidebar-hover" : ""} hover:rounded-md w-full font-normal ${isActive ? "bg-back-sidebar-active rounded-md" : ""}`
+              }
               to="/transactions"
             >
               <ArrowLeftRight className="" />
               <span>Transactions</span>
-            </Link>
-            <Link
-              className="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md"
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                `flex space-x-3 py-3 px-4 text-white ${!isActive ? "hover:bg-back-sidebar-hover" : ""} hover:rounded-md w-full font-normal ${isActive ? "bg-back-sidebar-active rounded-md" : ""}`
+              }
               to="/budget"
             >
               <ChartPie className="" />
               <span>Budget</span>
-            </Link>
-            <Link
-              className="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md"
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                `flex space-x-3 py-3 px-4 text-white ${!isActive ? "hover:bg-back-sidebar-hover" : ""} hover:rounded-md w-full font-normal ${isActive ? "bg-back-sidebar-active rounded-md" : ""}`
+              }
               to="/categories"
             >
               <LayoutGrid className="" />
               <span>Categories</span>
-            </Link>
-            <Link
-              className="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md"
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                `flex space-x-3 py-3 px-4 text-white ${!isActive ? "hover:bg-back-sidebar-hover" : ""} hover:rounded-md w-full font-normal ${isActive ? "bg-back-sidebar-active rounded-md" : ""}`
+              }
               to="/profile"
             >
               <User className="" />
               <span>Profile</span>
-            </Link>
+            </NavLink>
           </nav>
         </div>
         <nav>
           <Link
-            className="flex space-x-3 py-3 px-4 text-white hover:bg-back-sidebar-hover hover:rounded-md"
+            className={({ isActive }) =>
+              `flex space-x-3 py-3 px-4 text-white ${!isActive ? "hover:bg-back-sidebar-hover" : ""} hover:rounded-md w-full font-normal ${isActive ? "bg-back-sidebar-active rounded-md" : ""}`
+            }
             to="/profile"
           >
             <Settings className="" />
