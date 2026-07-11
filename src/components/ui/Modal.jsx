@@ -1,6 +1,6 @@
 import Button from "./Button";
 
-const Modal = (onYes, onCancel) => {
+const Modal = ({onYes, onCancel}) => {
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
       <div className="bg-white w-full max-w-xl rounded-lg shadow-lg p-6 space-y-10">
