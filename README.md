@@ -1,17 +1,42 @@
-# React + Vite
+# FinTrack — Personal Finance Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack personal finance web app to track income, expenses, and budgets with real-time charts.
 
-Currently, two official plugins are available:
+## 🚀 Tech Stack
+- React.js + Vite
+- Tailwind CSS
+- Context API + useReducer
+- React Hook Form
+- Axios
+- PocketBase
+- Recharts
+- date-fns
+- React Router DOM
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
+- User authentication (login/register)
+- Track income and expenses by category
+- Monthly budget management
+- Dashboard with charts and summaries
+- Filter and search transactions
+- Responsive design
 
-## React Compiler
+## 🛠️ Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
+- Node.js
+- PocketBase
 
-## Expanding the ESLint configuration
+### Installation
+1. Clone the repo
+git clone https://github.com/KamyabT/fintracker
+2. Install dependencies
+npm install
+3. Start PocketBase
+./pocketbase serve
+4. Start the app
+npm run dev
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# fintracker
+## 🔗 Links
+- Live Demo: coming soon
+- GitHub: https://github.com/KamyabT/fintracker
