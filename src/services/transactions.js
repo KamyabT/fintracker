@@ -2,7 +2,6 @@ import api from "./api";
 
 export async function getAllTransactions() {
   const result = await api.get("/collections/transactions/records?expand=category");
-  console.log(result, "transactions result");
 
   return result.data;
 }
@@ -11,7 +10,6 @@ export async function getTransactions(page = 1, perPage = 5) {
   const result = await api.get(
     `/collections/transactions/records?page=${page}&perPage=${perPage}&expand=category&sort=-transactionDate`,
   );
-  console.log(result, "transactions paginated result");
 
   return result.data;
 }

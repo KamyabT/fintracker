@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 const AddTransactionForm = () => {
   const {
-    allCategories,
+    categories,
     closeModal,
     transactionToEdit,
     handleUpdateTransaction,
@@ -128,7 +128,7 @@ const AddTransactionForm = () => {
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
                 {...register("category", { required: "Category is required" })}
               >
-                {allCategories?.items?.map((category) => (
+                {categories?.items?.map((category) => (
                   <option value={category.id} key={category.id}>
                     {category.name}
                   </option>

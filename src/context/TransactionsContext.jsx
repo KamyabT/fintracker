@@ -7,6 +7,7 @@ import {
   updateTransaction,
 } from "../services/transactions";
 import toast from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
 
 const TransactionsContext = createContext();
 
@@ -14,7 +15,7 @@ export function TransactionsContextProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [allTransactions, setAllTransactions] = useState([]);
-  const [allCategories, setAllCategories] = useState([]);
+  // const [allCategories, setAllCategories] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -25,17 +26,25 @@ export function TransactionsContextProvider({ children }) {
   const [showTransactionModal, setShowTransactionModal] = useState(false);
   const [transactionToEdit, setTransactionToEdit] = useState(null);
 
+  const { data: categories } = useQuery({
+    queryKey: ["categories"],
+    queryFn: getCategories,
+  });
+
+  //   const { data: allTransactions } = useQuery({
+  //   queryKey: ["allTransactions"],
+  //   queryFn: getAllTransactions,
+  // });
+
   useEffect(() => {
     async function getTransactionsList() {
       setIsLoading(true);
       setError(null);
       try {
-        const [categoriesData, allDatas, pageData] = await Promise.all([
-          getCategories(),
+        const [allDatas, pageData] = await Promise.all([
           getAllTransactions(),
           getTransactions(currentPage, perPage),
         ]);
-        setAllCategories(categoriesData);
         setAllTransactions(allDatas.items);
         setTransactions(pageData.items);
         setCurrentPage(pageData.page);
@@ -76,12 +85,12 @@ export function TransactionsContextProvider({ children }) {
   }
 
   function openAddModal() {
-    setTransactionToEdit(null);     
+    setTransactionToEdit(null);
     setShowTransactionModal(true);
   }
 
   function openEditModal(transaction) {
-    setTransactionToEdit(transaction); 
+    setTransactionToEdit(transaction);
     setShowTransactionModal(true);
   }
 
@@ -98,7 +107,7 @@ export function TransactionsContextProvider({ children }) {
         totalPages,
         currentPage,
         allTransactions,
-        allCategories,
+        categories,
         showTransactionModal,
         transactionToEdit,
         setPerPage,
