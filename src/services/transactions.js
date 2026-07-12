@@ -32,7 +32,11 @@ export async function addNewTransaction(data) {
 }
 
 export async function deleteTransaction(data) {
-  console.log("delete runned");
   const result = await api.delete(`/collections/transactions/records/${data.id}`);
-  console.log(result, "delete res");
+  return result;
+}
+
+export async function updateTransaction(data) {
+  const result = await api.patch(`/collections/transactions/records/${data.id}`, data);
+  return result;
 }

@@ -1,41 +1,60 @@
+import { useTransactions } from "../../context/TransactionsContext";
+import { addNewTransaction } from "../../services/transactions";
+import { useForm } from "react-hook-form";
+import { format } from "date-fns";
 import Button from "./Button";
 import { DollarSign, MoveUpRight, ArrowDownToLine, CircleX } from "lucide-react";
-import { addNewTransaction } from "../../services/transactions";
-import { useTransactions } from "../../context/TransactionsContext";
-import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useState } from "react";
-import { format } from "date-fns";
 
-const AddTransactionForm = ({ transactionToEdit }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const { setAdd, allCategories } = useTransactions();
+const AddTransactionForm = () => {
+  const {
+    allCategories,
+    closeModal,
+    transactionToEdit,
+    handleUpdateTransaction,
+  } = useTransactions();
+
+  const isEditing = !!transactionToEdit;
+
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
-      type: "expense",
+      transactionName: transactionToEdit?.transactionName || "",
+      amount: transactionToEdit?.amount || "",
+      type: transactionToEdit?.type || "Expense",
+      category: transactionToEdit?.category || "", // ID not name!
+      date: transactionToEdit
+        ? format(new Date(transactionToEdit.transactionDate), "yyyy-MM-dd")
+        : "",
+      time: transactionToEdit
+        ? format(new Date(transactionToEdit.transactionDate), "HH:mm")
+        : "",
+      description: transactionToEdit?.description || "",
+      paymentAccount: transactionToEdit?.paymentAccount || "mainWallet",
     },
   });
 
   const selectedType = watch("type");
-
   const userId = JSON.parse(localStorage.getItem("user")).id;
-
-  function handleAddTransactionForm() {
-    setAdd(false);
-  }
 
   async function onSubmit(data) {
     const transactionDate = new Date(`${data.date}T${data.time}`).toISOString();
-    const finalData = { ...data, user: userId, transactionDate: transactionDate };
-    try {
-      const result = await addNewTransaction(finalData);
-      if (result.status === 200) {
-        setAdd(false);
-        toast.success("Transcaction added successfully");
+    const finalData = {
+      ...data,
+      user: userId,
+      transactionDate,
+      id: transactionToEdit?.id,
+    };
+
+    if (isEditing) {
+      await handleUpdateTransaction(finalData); // context handles close + refetch
+    } else {
+      try {
+        await addNewTransaction(finalData);
+        toast.success("Transaction added successfully!");
+        closeModal();
+      } catch (error) {
+        toast.error(`Failed to add transaction: ${error.message}`);
       }
-    } catch (error) {
-      toast.error(`There was an ${error.name} error while adding new transaction`);
-      throw error;
     }
   }
 
@@ -49,35 +68,28 @@ const AddTransactionForm = ({ transactionToEdit }) => {
           <div className="flex flex-row justify-between">
             <div className="flex flex-col mb-1">
               <h3 className="font-semibold text-xl mb-1">
-                {isEditing ? "Editing transaction" : "Add New Transaction"}
+                {isEditing ? "Edit Transaction" : "Add New Transaction"}
               </h3>
-              <span className="text-gray-500 text-sm font-normal ">
-                {isEditing ? "" : "Record your income or expense."}
+              <span className="text-gray-500 text-sm font-normal">
+                {isEditing ? "Update transaction details." : "Record your income or expense."}
               </span>
             </div>
-            <div className="cursor-pointer" onClick={handleAddTransactionForm}>
+            <div className="cursor-pointer" onClick={closeModal}>
               <CircleX color="red" />
             </div>
           </div>
           <div className="flex flex-col">
-            <label className="font-medium mb-2" htmlFor="">
-              Transaction Name
-            </label>
+            <label className="font-medium mb-2">Transaction Name</label>
             <input
               className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
               type="text"
-              value={transactionToEdit ? transactionToEdit.transactionName : ""}
               placeholder="Transaction Name"
-              {...register("transactionName", {
-                required: "Transaction Name is required",
-              })}
+              {...register("transactionName", { required: "Transaction Name is required" })}
             />
           </div>
-          <div className="flex flex-row justify-betwen gap-x-6">
+          <div className="flex flex-row gap-x-6">
             <div className="flex flex-col w-full">
-              <label className="font-medium mb-2" htmlFor="">
-                Transaction Type
-              </label>
+              <label className="font-medium mb-2">Transaction Type</label>
               <div className="flex flex-row gap-x-3">
                 <Button
                   classesList={`flex items-center justify-center gap-x-2 border w-full rounded-md border-gray-300 py-2 cursor-pointer font-medium ${selectedType === "Expense" ? "bg-red-100 text-red-500 border-red-500" : ""}`}
@@ -95,117 +107,84 @@ const AddTransactionForm = ({ transactionToEdit }) => {
                   <MoveUpRight size={16} color="green" />
                   Income
                 </Button>
-                <input
-                  type="hidden"
-                  {...register("type", { required: "Transaction type is required" })}
-                />
+                <input type="hidden" {...register("type", { required: true })} />
               </div>
             </div>
             <div className="flex flex-col w-full relative">
               <DollarSign className="absolute bottom-3.5 left-2" size={14} />
-              <label className="font-medium mb-2" htmlFor="">
-                Amount
-              </label>
+              <label className="font-medium mb-2">Amount</label>
               <input
                 type="number"
                 className="border border-gray-300 pl-6 py-2 rounded-md outline-none focus:border-primary"
-                value={transactionToEdit ? transactionToEdit.amount : ""}
                 placeholder="0.00"
                 {...register("amount", { required: "Amount is required" })}
               />
             </div>
           </div>
-          <div className="flex flex-row justify-betwen gap-x-6">
+          <div className="flex flex-row gap-x-6">
             <div className="flex flex-col w-full">
-              <label className="font-medium mb-2" htmlFor="">
-                Category
-              </label>
+              <label className="font-medium mb-2">Category</label>
               <select
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
-                name=""
-                value={transactionToEdit ? transactionToEdit.expand.category.name : ""}
-                id=""
                 {...register("category", { required: "Category is required" })}
               >
-                {allCategories.items.map((category) => {
-                  return (
-                    <option value={`${category.id}`} key={category.id}>
-                      {category.name}
-                    </option>
-                  );
-                })}
+                {allCategories?.items?.map((category) => (
+                  <option value={category.id} key={category.id}>
+                    {category.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="flex flex-col w-full">
-              <label className="font-medium mb-2" htmlFor="">
-                Payment Account
-              </label>
+              <label className="font-medium mb-2">Payment Account</label>
               <select
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
-                name=""
-                value={transactionToEdit ? transactionToEdit.type : ""}
-                id=""
-                {...register("paymentAccount", {
-                  required: "Payment Account is required",
-                })}
+                {...register("paymentAccount", { required: "Payment Account is required" })}
               >
                 <option value="mainWallet">Main Wallet</option>
               </select>
             </div>
           </div>
           <div className="flex flex-col">
-            <label className="font-medium mb-2" htmlFor="description">
-              Description
-            </label>
+            <label className="font-medium mb-2">Description</label>
             <input
               className="border border-gray-300 outline-none w-full rounded-md px-3 py-2 focus:border-primary"
               type="text"
-              value={transactionToEdit ? transactionToEdit.description : ""}
               placeholder="What was this transaction for?"
               {...register("description")}
             />
           </div>
-          <div className="flex flex-row justify-between gap-x-6">
+          <div className="flex flex-row gap-x-6">
             <div className="flex flex-col w-full">
-              <label className="font-medium mb-2" htmlFor="">
-                Date
-              </label>
+              <label className="font-medium mb-2">Date</label>
               <input
                 type="date"
-                value={transactionToEdit ? transactionToEdit.transactionDate : ""}
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
-                {...register("date", { required: "Transaction date is required" })}
+                {...register("date", { required: "Date is required" })}
               />
             </div>
             <div className="flex flex-col w-full">
-              <label className="font-medium mb-2" htmlFor="">
-                Time
-              </label>
+              <label className="font-medium mb-2">Time</label>
               <input
                 type="time"
-                value={
-                  transactionToEdit
-                    ? format(new Date(transactionToEdit.transactionDate), "HH:mm")
-                    : ""
-                }
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
-                {...register("time", { required: "Transaction time is required" })}
+                {...register("time", { required: "Time is required" })}
               />
             </div>
           </div>
-          {/* <div>Rec and tags</div> */}
           <div className="flex flex-row justify-end mt-10">
             <Button
-              classesList={`bg-gray-300 px-3 py-2 rounded-lg me-3 cursor-pointer hover:bg-red-500 hover:text-white`}
-              onClick={handleAddTransactionForm}
+              classesList="bg-gray-300 px-3 py-2 rounded-lg me-3 cursor-pointer hover:bg-red-500 hover:text-white"
+              onClick={closeModal}
+              type="button"
             >
               Cancel
             </Button>
             <Button
-              classesList={`bg-gray-300 px-3 py-2 rounded-lg cursor-pointer hover:bg-primary hover:text-white`}
+              classesList="bg-gray-300 px-3 py-2 rounded-lg cursor-pointer hover:bg-primary hover:text-white"
               type="submit"
             >
-              Save Transaction
+              {isEditing ? "Update Transaction" : "Save Transaction"}
             </Button>
           </div>
         </div>

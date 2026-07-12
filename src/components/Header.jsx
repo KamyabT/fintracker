@@ -5,17 +5,14 @@ import { useTransactions } from "../context/TransactionsContext";
 
 const Header = () => {
   const { user } = useAuth();
-  const { add, setAdd } = useTransactions();
+  const { openAddModal } = useTransactions(); // 👈 use context function
 
-  function handleAddNewtrans() {
-    setAdd(true);
-  }
   return (
     <header className="mb-5">
-      <div className="flex flex-row flex-wrap justify-between ">
+      <div className="flex flex-row flex-wrap justify-between">
         <div className="flex flex-col mb-3 md:mb-0">
           <h3 className="font-semibold text-xl mb-1">
-            Good morning, {user?.name || "Guest"}👋
+            Good morning, {user?.name || "Guest"} 👋
           </h3>
           <span className="text-gray-500 text-sm font-normal">
             Here's what's happening with your finances today.
@@ -24,7 +21,7 @@ const Header = () => {
         <div className="flex flex-row items-center">
           <Button
             classesList="bg-primary text-white px-4 py-2 rounded-lg font-normal text-[14px] hover:bg-primary-dark cursor-pointer me-4"
-            onClick={handleAddNewtrans}
+            onClick={openAddModal} // 👈 no more prop needed
             type="button"
           >
             + Add Transaction
@@ -33,9 +30,7 @@ const Header = () => {
             <Bell />
           </div>
           <div className="flex flex-row items-center pe-2">
-            <img src="#" alt="" />
             <p className="font-semibold me-2">{user?.name || "Guest"}</p>
-            <span>+</span>
           </div>
         </div>
       </div>

@@ -9,10 +9,15 @@ import Modal from "../components/ui/Modal";
 import { useState } from "react";
 
 const Transactions = () => {
-  const { transactions, isLoading, add, setAdd, handleDeleteTransaction } =
-    useTransactions();
+  const {
+    transactions,
+    isLoading,
+    showTransactionModal,
+    handleDeleteTransaction,
+    openEditModal,
+  } = useTransactions();
+
   const [transactionToDelete, setTransactionToDelete] = useState(null);
-  const [transactionToEdit, setTransactionToEdit] = useState(null);
 
   async function handleConfirmDelete() {
     await handleDeleteTransaction(transactionToDelete);
@@ -23,46 +28,36 @@ const Transactions = () => {
     setTransactionToDelete(null);
   }
 
-
   return (
-    <div className="flex flex-row bg-back-secondary ">
+    <div className="flex flex-row bg-back-secondary">
       {transactionToDelete && (
         <Modal onYes={handleConfirmDelete} onCancel={handleCancelDelete} />
       )}
-      {add && <AddTransactionForm />}
-      {transactionToEdit && (
-        <AddTransactionForm
-          transactionToEdit={transactionToEdit}
-        />
-      )}
+      {showTransactionModal && <AddTransactionForm />}
       <Sidebar />
       <main className="flex-1 px-5 py-5">
-        <Header setAdd={setAdd} />
+        <Header />
         <section className="bg-back-white px-4 py-4 rounded-md shadow-sm">
           <TransactionsHeader />
-          <div className="">
-            <div className="space-y-3">
-              {!isLoading &&
-                transactions?.length > 0 &&
-                transactions?.map((transaction) => {
-                  return (
-                    <TransactionsList
-                      transaction={transaction}
-                      key={transaction.id}
-                      showActions={true}
-                      setTransactionToDelete={setTransactionToDelete}
-                      setTransactionToEdit={setTransactionToEdit}
-                    />
-                  );
-                })}
-              {isLoading && (
-                <div className="flex justify-center font-semibold text-[16px] text-gray-500">
-                  Loading recent transactions please wait...
-                </div>
-              )}
-            </div>
-            <Pagination />
+          <div className="space-y-3">
+            {!isLoading && transactions?.length > 0 &&
+              transactions.map((transaction) => (
+                <TransactionsList
+                  transaction={transaction}
+                  key={transaction.id}
+                  showActions={true}
+                  setTransactionToDelete={setTransactionToDelete}
+                  setTransactionToEdit={openEditModal} // 👈 use context function
+                />
+              ))
+            }
+            {isLoading && (
+              <div className="flex justify-center font-semibold text-[16px] text-gray-500">
+                Loading transactions...
+              </div>
+            )}
           </div>
+          <Pagination />
         </section>
       </main>
     </div>
