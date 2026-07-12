@@ -2,9 +2,9 @@ import { useTransactions } from "../context/TransactionsContext";
 import { isThisMonth } from "date-fns";
 
 export function useTransactionsCalculations() {
-  const { allTransactions } = useTransactions();
+  const { allTransaction } = useTransactions();
 
-  const thisMonth = allTransactions?.filter((transaction) =>
+  const thisMonth = allTransaction?.items?.filter((transaction) =>
     isThisMonth(new Date(transaction.transactionDate)),
   );
 

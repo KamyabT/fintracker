@@ -1,14 +1,14 @@
 import { useTransactions } from "../context/TransactionsContext";
 
 export function useTransactionStats() {
-  const { allTransactions } = useTransactions();
+  const {allTransaction } = useTransactions();
 
-  const totalIncome = allTransactions
-    .filter((t) => t.type === "Income")
+  const totalIncome = allTransaction?.items
+    ?.filter((t) => t.type === "Income")
     .reduce((sum, t) => sum + t.amount, 0);
 
-  const totalExpenses = allTransactions
-    .filter((t) => t.type === "Expense")
+  const totalExpenses = allTransaction?.items
+    ?.filter((t) => t.type === "Expense")
     .reduce((sum, t) => sum + t.amount, 0);
 
   const netBalance = totalIncome - totalExpenses;

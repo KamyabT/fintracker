@@ -14,8 +14,6 @@ const TransactionsContext = createContext();
 export function TransactionsContextProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [allTransactions, setAllTransactions] = useState([]);
-  // const [allCategories, setAllCategories] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -31,21 +29,24 @@ export function TransactionsContextProvider({ children }) {
     queryFn: getCategories,
   });
 
-  //   const { data: allTransactions } = useQuery({
-  //   queryKey: ["allTransactions"],
-  //   queryFn: getAllTransactions,
-  // });
+    const { data: allTransaction } = useQuery({
+    queryKey: ["allTransaction"],
+    queryFn: getAllTransactions,
+  });
+
+      const { data: transactionss } = useQuery({
+    queryKey: ["transactions"],
+    queryFn: getTransactions(currentPage, perPage),
+  });
 
   useEffect(() => {
     async function getTransactionsList() {
       setIsLoading(true);
       setError(null);
       try {
-        const [allDatas, pageData] = await Promise.all([
-          getAllTransactions(),
+        const [pageData] = await Promise.all([
           getTransactions(currentPage, perPage),
         ]);
-        setAllTransactions(allDatas.items);
         setTransactions(pageData.items);
         setCurrentPage(pageData.page);
         setTotalPages(pageData.totalPages);
@@ -106,7 +107,8 @@ export function TransactionsContextProvider({ children }) {
         transactions,
         totalPages,
         currentPage,
-        allTransactions,
+        allTransaction,
+        transactionss,
         categories,
         showTransactionModal,
         transactionToEdit,

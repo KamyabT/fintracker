@@ -26,18 +26,19 @@ const renderCustomBarLabel = ({ x, y, width, value }) => {
 };
 
 const ExpensesOverview = () => {
-  const { allTransactions } = useTransactions();
+  const { allTransaction  } = useTransactions();
   /***************************/
 
   let start = startOfMonth(new Date());
   let end = lastDayOfMonth(new Date());
 
-  const thisMonthTransactions = allTransactions?.filter(
+  const thisMonthTransactions = allTransaction?.items?.filter(
     (transaction) =>
       isThisMonth(new Date(transaction.transactionDate)) &&
       transaction.type === "Expense",
-  );
+  )?? [];
 
+  console.log(thisMonthTransactions , "this month")
   const ExpensesByDay = thisMonthTransactions.reduce((acc, transaction) => {
     const transactionDay = new Date(transaction.transactionDate).getDate();
     acc[transactionDay] = (acc[transactionDay] || 0) + transaction.amount;

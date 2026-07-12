@@ -11,6 +11,7 @@ import { useState } from "react";
 const Transactions = () => {
   const {
     transactions,
+    transactionss,
     isLoading,
     showTransactionModal,
     handleDeleteTransaction,
