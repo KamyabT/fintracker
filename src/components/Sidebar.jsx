@@ -89,7 +89,7 @@ const Sidebar = () => {
             className={({ isActive }) =>
               `flex space-x-3 py-3 px-4 text-white ${!isActive ? "hover:bg-back-sidebar-hover" : ""} hover:rounded-md w-full font-normal ${isActive ? "bg-back-sidebar-active rounded-md" : ""}`
             }
-            to="/profile"
+            to="/settings"
           >
             <Settings className="" />
             <span>Settings</span>

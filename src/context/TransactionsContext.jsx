@@ -7,51 +7,68 @@ import {
   updateTransaction,
 } from "../services/transactions";
 import toast from "react-hot-toast";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const TransactionsContext = createContext();
 
 export function TransactionsContextProvider({ children }) {
+  const queryClient = useQueryClient();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
 
-  // modal state
   const [showTransactionModal, setShowTransactionModal] = useState(false);
   const [transactionToEdit, setTransactionToEdit] = useState(null);
 
-  const { data: categories , isLoading : categoryLoading } = useQuery({
+  /***********React Query***********/
+  const { data: categories } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
   });
 
-  const { data: allTransaction , isLoading : allTransactionsLoading } = useQuery({
+  const { data: allTransaction } = useQuery({
     queryKey: ["allTransaction"],
     queryFn: getAllTransactions,
   });
 
-  const { data: transactions , isLoading } = useQuery({
+  const { data: transactionsData, isLoading } = useQuery({
     queryKey: ["transactions", currentPage, perPage],
     queryFn: () => getTransactions(currentPage, perPage),
   });
+
+  const transactions = transactionsData?.items || [];
+  const totalPages = transactionsData?.totalPages || 1;
+  const totalItems = transactionsData?.totalItems || 0;
+
+  console.log(transactions, "tranactions");
+  console.log(totalItems, "total items");
+  console.log(totalPages, "total pages");
+
+  /*****************Delete Transaction Request Initiation*****************/
 
   async function handleDeleteTransaction(transaction) {
     try {
       await deleteTransaction(transaction);
       toast.success("Transaction deleted successfully!");
-
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["allTransaction"] });
     } catch (error) {
       toast.error("Failed to delete transaction");
       console.log(error);
     }
   }
 
+  /*****************Update Transaction Request Initiation*****************/
+
   async function handleUpdateTransaction(data) {
     try {
       await updateTransaction(data);
       toast.success("Transaction updated successfully!");
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["allTransaction"] });
       setTransactionToEdit(null);
       setShowTransactionModal(false);
-      setCurrentPage(1);
+      // setCurrentPage(1);
     } catch (error) {
       toast.error("Failed to update transaction");
       console.log(error);
@@ -72,20 +89,20 @@ export function TransactionsContextProvider({ children }) {
     setTransactionToEdit(null);
     setShowTransactionModal(false);
   }
-  
+
   return (
     <TransactionsContext.Provider
       value={{
-        transactions: transactions?.items ?? [],
-        totalPages: transactions?.totalPages ?? 1,
-        totalItems: transactions?.totalItems ?? 0,
-        currentPage: transactions?.page ?? currentPage,
+        totalPages,
+        totalItems,
+        currentPage,
 
         isLoading,
-        categoryLoading,
-        allTransactionsLoading,
+
         allTransaction,
         categories,
+        transactions,
+
         showTransactionModal,
         transactionToEdit,
         setPerPage,

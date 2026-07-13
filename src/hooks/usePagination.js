@@ -3,7 +3,7 @@ import { useTransactions } from "../context/TransactionsContext";
 export function usePagination() {
   const { setCurrentPage, currentPage, totalPages } = useTransactions();
 
-
+  console.log(totalPages , "total in page")
   function handleChangePage(page) {
     if (page < 1 || page > totalPages) {
       return;

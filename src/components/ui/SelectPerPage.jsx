@@ -4,9 +4,7 @@ import { useTransactions } from "../../context/TransactionsContext";
 const SelectPerPage = () => {
   const { setPerPage } = useTransactions();
 
-  // useEffect(() => {
-  //   setPerPage(5);
-  // }, []);
+
 
   function handlePerPage(e) {
     console.log("value", e.target.value);

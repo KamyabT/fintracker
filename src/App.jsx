@@ -2,6 +2,7 @@ import { Routes, BrowserRouter, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import Settings from "./pages/Settings";
 import { Toaster } from "react-hot-toast";
 import Transactions from "./pages/Transactions";
 import Budget from "./pages/Budget";
@@ -18,7 +19,7 @@ function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60 * 1000, 
+        staleTime: 60 * 1000,
       },
     },
   });
@@ -85,6 +86,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Profile />
+                  </ProtectedRoute>
+                }
+              ></Route>
+              <Route
+                path="/settings"
+                element={
+                  <ProtectedRoute>
+                    <Settings />
                   </ProtectedRoute>
                 }
               ></Route>

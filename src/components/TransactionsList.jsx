@@ -17,7 +17,6 @@ const TransactionsList = ({
   }
 
   function handleEditTransaction(transaction){
-    console.log("edit " , transaction)
     setTransactionToEdit(transaction)
   }
 
