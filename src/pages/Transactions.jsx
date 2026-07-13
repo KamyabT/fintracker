@@ -11,7 +11,6 @@ import { useState } from "react";
 const Transactions = () => {
   const {
     transactions,
-    transactionss,
     isLoading,
     showTransactionModal,
     handleDeleteTransaction,
@@ -42,7 +41,7 @@ const Transactions = () => {
           <TransactionsHeader />
           <div className="space-y-3">
             {!isLoading && transactions?.length > 0 &&
-              transactions.map((transaction) => (
+              transactions?.map((transaction) => (
                 <TransactionsList
                   transaction={transaction}
                   key={transaction.id}

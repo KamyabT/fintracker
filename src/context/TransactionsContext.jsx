@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import {
   getTransactions,
   getAllTransactions,
@@ -12,60 +12,33 @@ import { useQuery } from "@tanstack/react-query";
 const TransactionsContext = createContext();
 
 export function TransactionsContextProvider({ children }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [transactions, setTransactions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
   const [perPage, setPerPage] = useState(5);
 
   // modal state
   const [showTransactionModal, setShowTransactionModal] = useState(false);
   const [transactionToEdit, setTransactionToEdit] = useState(null);
 
-  const { data: categories } = useQuery({
+  const { data: categories , isLoading : categoryLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
   });
 
-    const { data: allTransaction } = useQuery({
+  const { data: allTransaction , isLoading : allTransactionsLoading } = useQuery({
     queryKey: ["allTransaction"],
     queryFn: getAllTransactions,
   });
 
-      const { data: transactionss } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: getTransactions(currentPage, perPage),
+  const { data: transactions , isLoading } = useQuery({
+    queryKey: ["transactions", currentPage, perPage],
+    queryFn: () => getTransactions(currentPage, perPage),
   });
-
-  useEffect(() => {
-    async function getTransactionsList() {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const [pageData] = await Promise.all([
-          getTransactions(currentPage, perPage),
-        ]);
-        setTransactions(pageData.items);
-        setCurrentPage(pageData.page);
-        setTotalPages(pageData.totalPages);
-        setTotalItems(pageData.totalItems);
-      } catch (error) {
-        toast.error("Failed to load data");
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    getTransactionsList();
-  }, [currentPage, perPage]);
 
   async function handleDeleteTransaction(transaction) {
     try {
       await deleteTransaction(transaction);
       toast.success("Transaction deleted successfully!");
-      setCurrentPage(1);
+
     } catch (error) {
       toast.error("Failed to delete transaction");
       console.log(error);
@@ -99,16 +72,19 @@ export function TransactionsContextProvider({ children }) {
     setTransactionToEdit(null);
     setShowTransactionModal(false);
   }
-
+  
   return (
     <TransactionsContext.Provider
       value={{
+        transactions: transactions?.items ?? [],
+        totalPages: transactions?.totalPages ?? 1,
+        totalItems: transactions?.totalItems ?? 0,
+        currentPage: transactions?.page ?? currentPage,
+
         isLoading,
-        transactions,
-        totalPages,
-        currentPage,
+        categoryLoading,
+        allTransactionsLoading,
         allTransaction,
-        transactionss,
         categories,
         showTransactionModal,
         transactionToEdit,
