@@ -40,10 +40,6 @@ export function TransactionsContextProvider({ children }) {
   const totalPages = transactionsData?.totalPages || 1;
   const totalItems = transactionsData?.totalItems || 0;
 
-  console.log(transactions, "tranactions");
-  console.log(totalItems, "total items");
-  console.log(totalPages, "total pages");
-
   /*****************Delete Transaction Request Initiation*****************/
 
   async function handleDeleteTransaction(transaction) {
@@ -68,7 +64,7 @@ export function TransactionsContextProvider({ children }) {
       queryClient.invalidateQueries({ queryKey: ["allTransaction"] });
       setTransactionToEdit(null);
       setShowTransactionModal(false);
-      // setCurrentPage(1);
+      setCurrentPage(1);
     } catch (error) {
       toast.error("Failed to update transaction");
       console.log(error);

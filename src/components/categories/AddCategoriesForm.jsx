@@ -1,4 +1,4 @@
-import { DollarSign, MoveUpRight, ArrowDownToLine, CircleX } from "lucide-react";
+import { CircleX } from "lucide-react";
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 
@@ -9,13 +9,18 @@ const AddCategoriesForm = ({ setShowCategoryForm }) => {
     },
   });
 
+  function onSubmit (data){
+    console.log("submitted")
+  }
+
+
   function handleCloseCategoryForm() {
     setShowCategoryForm(false);
   }
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
-      <form className="bg-white w-full max-w-xl rounded-lg shadow-lg p-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="bg-white w-full max-w-xl rounded-lg shadow-lg p-6">
         <div className="space-y-4">
           <div className="flex flex-row justify-between">
             <div className="flex flex-col mb-1">
