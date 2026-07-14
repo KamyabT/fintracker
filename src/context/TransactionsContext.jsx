@@ -21,20 +21,23 @@ export function TransactionsContextProvider({ children }) {
   const [showTransactionModal, setShowTransactionModal] = useState(false);
   const [transactionToEdit, setTransactionToEdit] = useState(null);
 
-  /***********React Query***********/
+  /***********React Queries***********/
   const { data: categories } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
+    staleTime: 0
   });
 
   const { data: allTransaction } = useQuery({
     queryKey: ["allTransaction"],
     queryFn: getAllTransactions,
+    staleTime : 60 * 1000
   });
 
   const { data: transactionsData, isLoading } = useQuery({
     queryKey: ["transactions", currentPage, perPage],
     queryFn: () => getTransactions(currentPage, perPage),
+    staleTime: 60 * 1000
   });
 
   const { data: dashboardTransactionsData, isLoading: isLoadingDashboardTransactions } =
