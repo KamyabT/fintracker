@@ -36,9 +36,16 @@ export function TransactionsContextProvider({ children }) {
     queryFn: () => getTransactions(currentPage, perPage),
   });
 
+  const { data: dashboardTransactionsData, isLoading: isLoadingDashboardTransactions } =
+    useQuery({
+      queryKey: ["dashboardTransactions"],
+      queryFn: () => getTransactions(1, 5),
+    });
+
   const transactions = transactionsData?.items || [];
   const totalPages = transactionsData?.totalPages || 1;
   const totalItems = transactionsData?.totalItems || 0;
+  const dashboardTransactions = dashboardTransactionsData?.items || [];
 
   /*****************Delete Transaction Request Initiation*****************/
 
@@ -64,9 +71,8 @@ export function TransactionsContextProvider({ children }) {
       queryClient.invalidateQueries({ queryKey: ["allTransaction"] });
       setTransactionToEdit(null);
       setShowTransactionModal(false);
-      setCurrentPage(1);
     } catch (error) {
-      toast.error("Failed to update transaction");
+      toast.error("Failed to update transaction", error.name);
       console.log(error);
     }
   }
@@ -94,10 +100,13 @@ export function TransactionsContextProvider({ children }) {
         currentPage,
 
         isLoading,
+        isLoadingDashboardTransactions,
 
         allTransaction,
         categories,
         transactions,
+
+        dashboardTransactions,
 
         showTransactionModal,
         transactionToEdit,

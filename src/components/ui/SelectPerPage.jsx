@@ -1,14 +1,11 @@
 import { useTransactions } from "../../context/TransactionsContext";
-// import { useEffect } from "react";
 
 const SelectPerPage = () => {
   const { setPerPage } = useTransactions();
 
 
-
   function handlePerPage(e) {
-    console.log("value", e.target.value);
-    setPerPage(e.target.value);
+    setPerPage(Number(e.target.value));
   }
 
   return (

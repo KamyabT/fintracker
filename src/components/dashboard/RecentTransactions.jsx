@@ -4,14 +4,14 @@ import { useTransactions } from "../../context/TransactionsContext";
 import Pagination from "../../components/ui/Pagination";
 
 const RecentTransactions = () => {
-  const { transactions, isLoading } = useTransactions();
+  const { dashboardTransactions, isLoading } = useTransactions();
 
   return (
     <div className="bg-back-white px-4 py-4 rounded-md shadow-sm">
       <RecentTransactionsHeader />
-      {!isLoading && transactions?.length > 0 && (
+      {!isLoading && dashboardTransactions?.length > 0 && (
         <div className="space-y-3">
-          {transactions?.map((transaction) => {
+          {dashboardTransactions?.map((transaction) => {
             return (
               <TransactionsList
                 transaction={transaction}
