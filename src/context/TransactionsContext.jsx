@@ -5,6 +5,7 @@ import {
   getCategories,
   deleteTransaction,
   updateTransaction,
+  addNewTransaction,
 } from "../services/transactions";
 import toast from "react-hot-toast";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -46,6 +47,19 @@ export function TransactionsContextProvider({ children }) {
   const totalPages = transactionsData?.totalPages || 1;
   const totalItems = transactionsData?.totalItems || 0;
   const dashboardTransactions = dashboardTransactionsData?.items || [];
+  /*****************Add Transaction Request Initiation*****************/
+
+  async function handleAddTransaction(data) {
+    try {
+      await addNewTransaction(data);
+      toast.success("Transaction added successfully!");
+      queryClient.invalidateQueries({ queryKey: [transactions] });
+      queryClient.invalidateQueries({ queryKey: [allTransaction] });
+    } catch (error) {
+      toast.error("Failed to add transaction");
+      throw error;
+    }
+  }
 
   /*****************Delete Transaction Request Initiation*****************/
 
@@ -57,7 +71,7 @@ export function TransactionsContextProvider({ children }) {
       queryClient.invalidateQueries({ queryKey: ["allTransaction"] });
     } catch (error) {
       toast.error("Failed to delete transaction");
-      console.log(error);
+      throw error;
     }
   }
 
@@ -73,7 +87,7 @@ export function TransactionsContextProvider({ children }) {
       setShowTransactionModal(false);
     } catch (error) {
       toast.error("Failed to update transaction", error.name);
-      console.log(error);
+      throw error;
     }
   }
 
@@ -110,10 +124,14 @@ export function TransactionsContextProvider({ children }) {
 
         showTransactionModal,
         transactionToEdit,
+
         setPerPage,
         setCurrentPage,
+
         handleDeleteTransaction,
         handleUpdateTransaction,
+        handleAddTransaction,
+
         openAddModal,
         openEditModal,
         closeModal,

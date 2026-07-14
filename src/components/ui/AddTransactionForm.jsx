@@ -1,10 +1,8 @@
 import { useTransactions } from "../../context/TransactionsContext";
-import { addNewTransaction } from "../../services/transactions";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
 import Button from "./Button";
 import { DollarSign, MoveUpRight, ArrowDownToLine, CircleX } from "lucide-react";
-import toast from "react-hot-toast";
 
 const AddTransactionForm = () => {
   const {
@@ -12,6 +10,7 @@ const AddTransactionForm = () => {
     closeModal,
     transactionToEdit,
     handleUpdateTransaction,
+    handleAddTransaction,
   } = useTransactions();
 
   const isEditing = !!transactionToEdit;
@@ -46,15 +45,9 @@ const AddTransactionForm = () => {
     };
 
     if (isEditing) {
-      await handleUpdateTransaction(finalData); // context handles close + refetch
+      await handleUpdateTransaction(finalData);
     } else {
-      try {
-        await addNewTransaction(finalData);
-        toast.success("Transaction added successfully!");
-        closeModal();
-      } catch (error) {
-        toast.error(`Failed to add transaction: ${error.message}`);
-      }
+      await handleAddTransaction(finalData);
     }
   }
 
@@ -71,7 +64,9 @@ const AddTransactionForm = () => {
                 {isEditing ? "Edit Transaction" : "Add New Transaction"}
               </h3>
               <span className="text-gray-500 text-sm font-normal">
-                {isEditing ? "Update transaction details." : "Record your income or expense."}
+                {isEditing
+                  ? "Update transaction details."
+                  : "Record your income or expense."}
               </span>
             </div>
             <div className="cursor-pointer" onClick={closeModal}>
@@ -84,7 +79,9 @@ const AddTransactionForm = () => {
               className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
               type="text"
               placeholder="Transaction Name"
-              {...register("transactionName", { required: "Transaction Name is required" })}
+              {...register("transactionName", {
+                required: "Transaction Name is required",
+              })}
             />
           </div>
           <div className="flex flex-row gap-x-6">
@@ -139,7 +136,9 @@ const AddTransactionForm = () => {
               <label className="font-medium mb-2">Payment Account</label>
               <select
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
-                {...register("paymentAccount", { required: "Payment Account is required" })}
+                {...register("paymentAccount", {
+                  required: "Payment Account is required",
+                })}
               >
                 <option value="mainWallet">Main Wallet</option>
               </select>
