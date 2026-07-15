@@ -21,35 +21,38 @@ export function TransactionsContextProvider({ children }) {
   const [showTransactionModal, setShowTransactionModal] = useState(false);
   const [transactionToEdit, setTransactionToEdit] = useState(null);
 
+  const [dashboardPage, setDashboardPage] = useState(1);
+  const DASHBOARD_PER_PAGE = 5;
   /***********React Queries***********/
   const { data: categories } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
-    staleTime: 0
+    staleTime: 0,
   });
 
   const { data: allTransaction } = useQuery({
     queryKey: ["allTransaction"],
     queryFn: getAllTransactions,
-    staleTime : 60 * 1000
+    staleTime: 60 * 1000,
   });
 
   const { data: transactionsData, isLoading } = useQuery({
     queryKey: ["transactions", currentPage, perPage],
     queryFn: () => getTransactions(currentPage, perPage),
-    staleTime: 60 * 1000
+    staleTime: 60 * 1000,
   });
 
   const { data: dashboardTransactionsData, isLoading: isLoadingDashboardTransactions } =
     useQuery({
-      queryKey: ["dashboardTransactions"],
-      queryFn: () => getTransactions(1, 5),
+      queryKey: ["dashboardTransactions", dashboardPage],
+      queryFn: () => getTransactions(dashboardPage, DASHBOARD_PER_PAGE),
     });
 
   const transactions = transactionsData?.items || [];
   const totalPages = transactionsData?.totalPages || 1;
   const totalItems = transactionsData?.totalItems || 0;
   const dashboardTransactions = dashboardTransactionsData?.items || [];
+  const dashboardTotalPages = dashboardTransactionsData?.totalPages || 1;
   /*****************Add Transaction Request Initiation*****************/
 
   async function handleAddTransaction(data) {
@@ -124,6 +127,9 @@ export function TransactionsContextProvider({ children }) {
         transactions,
 
         dashboardTransactions,
+        dashboardTotalPages,
+        dashboardPage,
+        setDashboardPage,
 
         showTransactionModal,
         transactionToEdit,

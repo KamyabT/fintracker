@@ -1,10 +1,12 @@
 import TransactionsList from "../TransactionsList";
 import RecentTransactionsHeader from "./RecentTransactionsHeader";
 import { useTransactions } from "../../context/TransactionsContext";
-import Pagination from "../../components/ui/Pagination";
+import DashboardPagination from "./DashboardPagination";
 
 const RecentTransactions = () => {
   const { dashboardTransactions, isLoadingDashboardTransactions } = useTransactions();
+
+  console.log("dash ", dashboardTransactions);
 
   return (
     <div className="bg-back-white px-4 py-4 rounded-md shadow-sm">
@@ -27,7 +29,7 @@ const RecentTransactions = () => {
           Loading recent transactions please wait...
         </div>
       )}
-      <Pagination />
+      <DashboardPagination />
     </div>
   );
 };
