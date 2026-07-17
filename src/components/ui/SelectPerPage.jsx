@@ -1,14 +1,7 @@
-import { useEffect } from "react";
 import { useTransactions } from "../../context/TransactionsContext";
 
 const SelectPerPage = () => {
   const { setPerPage } = useTransactions();
-
-  useEffect(()=> {
-    setPerPage(5)
-  }, [])
-
-
 
   function handlePerPage(e) {
     setPerPage(Number(e.target.value));
@@ -18,7 +11,7 @@ const SelectPerPage = () => {
     <div className="space-x-2 me-2">
       <label className="font-medium text-[14px] text-black-500">Records per page</label>
       <select
-        className="font-medium border px-3 py-2 border-gray-300 outline-none rounded-lg text-[14px] cursor-pointer"
+        className="font-medium border px-3 py-2 border-gray-300 outline-none rounded-lg text-[14px] cursor-pointer focus:border-primary"
         onChange={(e) => handlePerPage(e)}
       >
         <option value="5">5</option>
