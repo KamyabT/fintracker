@@ -26,10 +26,7 @@ const TransactionsFilters = ({ dispatch, transactionsFilters }) => {
           className="font-medium border px-3 py-2 border-gray-300 outline-none rounded-lg text-[14px] cursor-pointer focus:border-primary"
           name=""
           id=""
-          onChange={(e) => {
-            console.log("type dispatch", e.target.value);
-            dispatch({ type: "SET_TYPE", payload: e.target.value });
-          }}
+          onChange={(e) => dispatch({ type: "SET_TYPE", payload: e.target.value })}
           value={transactionsFilters.type}
         >
           <option value="All">All</option>

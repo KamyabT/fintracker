@@ -4,29 +4,27 @@ import { filtersReducer, initialState } from "../reducers/filtersReducer";
 
 export function useTransactionFilters() {
   const [transactionsFilters, dispatch] = useReducer(filtersReducer, initialState);
-
-  console.log(transactionsFilters , "inside custom hook")
-
   const { transactions } = useTransactions();
-  const types = "Expense";
-  const categoryId = "0rd2qqjr3moa5si";
-  const query = "test";
+  const { search, type, category } = transactionsFilters;
   let filteredTransactions = [...transactions];
-  console.log("all ", transactions);
 
-  filteredTransactions = filteredTransactions.filter((transaction) => {
-    return transaction.name === query;
-  });
+  if (search && search !== "") {
+    filteredTransactions = filteredTransactions.filter((transaction) => {
+      return transaction.name === search;
+    });
+  }
 
-  filteredTransactions = filteredTransactions.filter((transaction) => {
-    return transaction.type === types;
-  });
+  if (type !== "All") {
+    filteredTransactions = filteredTransactions.filter((transaction) => {
+      return transaction.type === type;
+    });
+  }
 
-  filteredTransactions = filteredTransactions.filter((transaction) => {
-    return transaction.expand.category.id === categoryId;
-  });
+  if (category !== "All") {
+    filteredTransactions = filteredTransactions.filter((transaction) => {
+      return transaction.expand.category.id === category;
+    });
+  }
 
-  let transactions1 = filteredTransactions;
-
-  return { transactions1 , dispatch , transactionsFilters};
+  return { filteredTransactions, dispatch, transactionsFilters };
 }

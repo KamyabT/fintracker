@@ -29,9 +29,9 @@ const Transactions = () => {
     setTransactionToDelete(null);
   }
 
-  const { transactions1, dispatch , transactionsFilters } = useTransactionFilters();
+  const { filteredTransactions, dispatch , transactionsFilters } = useTransactionFilters();
 
-  console.log("dash ", transactions1);
+  console.log("dash ", filteredTransactions);
 
   return (
     <div className="flex flex-row bg-back-secondary">
@@ -46,8 +46,8 @@ const Transactions = () => {
           <TransactionsHeader dispatch={dispatch} transactionsFilters={transactionsFilters} />
           <div className="space-y-3">
             {!isLoading &&
-              transactions?.length > 0 &&
-              transactions?.map((transaction) => (
+              filteredTransactions?.length > 0 &&
+              filteredTransactions?.map((transaction) => (
                 <TransactionsList
                   transaction={transaction}
                   key={transaction.id}
