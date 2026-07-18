@@ -6,7 +6,7 @@ import DashboardPagination from "./DashboardPagination";
 const RecentTransactions = () => {
   const { dashboardTransactions, isLoadingDashboardTransactions } = useTransactions();
 
-  console.log("dash ", dashboardTransactions);
+
 
   return (
     <div className="bg-back-white px-4 py-4 rounded-md shadow-sm">

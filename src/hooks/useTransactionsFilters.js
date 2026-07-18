@@ -1,12 +1,21 @@
-import { useReducer } from "react";
-import { filtersReducer, initialState } from "../reducers/filtersReducer";
+import { useTransactions } from "../context/TransactionsContext";
 
-export function useTransactionFilters(transactions) {
+export function useTransactionFilters() {
+  const { transactions } = useTransactions();
+  const types = "Expense";
+  const categoryId = "0rd2qqjr3moa5si";
+  let filteredTransactions;
+  console.log("all ", transactions);
 
-    const [filteredTransactions , dispatch] = useReducer(filtersReducer , initialState)
+  filteredTransactions = transactions.filter((transaction) => {
+    return transaction.type === types;
+  });
 
+  transactions.filter((transaction) => {
+    return transaction.expand.category.id === categoryId;
+  });
 
-  let filteredTransactions = [...tranactions];
+  let transactions1 = filteredTransactions;
 
-  console.log(" filters hook");
+  return { transactions1 };
 }

@@ -7,6 +7,7 @@ import TransactionsHeader from "../components/transactions/TransactionsHeader";
 import Pagination from "../components/ui/Pagination";
 import Modal from "../components/ui/Modal";
 import { useState } from "react";
+import { useTransactionFilters } from "../hooks/useTransactionsFilters";
 
 const Transactions = () => {
   const {
@@ -28,6 +29,10 @@ const Transactions = () => {
     setTransactionToDelete(null);
   }
 
+  const { transactions1 } = useTransactionFilters();
+
+  console.log("dash ", transactions1);
+
   return (
     <div className="flex flex-row bg-back-secondary">
       {transactionToDelete && (
@@ -40,7 +45,8 @@ const Transactions = () => {
         <section className="bg-back-white px-4 py-4 rounded-md shadow-sm">
           <TransactionsHeader />
           <div className="space-y-3">
-            {!isLoading && transactions?.length > 0 &&
+            {!isLoading &&
+              transactions?.length > 0 &&
               transactions?.map((transaction) => (
                 <TransactionsList
                   transaction={transaction}
@@ -49,8 +55,7 @@ const Transactions = () => {
                   setTransactionToDelete={setTransactionToDelete}
                   setTransactionToEdit={openEditModal} // 👈 use context function
                 />
-              ))
-            }
+              ))}
             {isLoading && (
               <div className="flex justify-center font-semibold text-[16px] text-gray-500">
                 Loading transactions...
