@@ -1,7 +1,7 @@
 export const initialState = {
   search: "",
-  type: "all",
-  category: "all",
+  type: "All",
+  category: "All",
 };
 
 export function filtersReducer(state , action) {
@@ -14,12 +14,12 @@ export function filtersReducer(state , action) {
     case "SET_TYPE":
       return {
         ...state,
-        type: action.type,
+        type: action.payload,
       };
     case "SET_CATEGORY":
       return {
         ...state,
-        category: action.type,
+        category: action.payload,
       };
     default:
       return state;

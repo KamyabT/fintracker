@@ -29,7 +29,7 @@ const Transactions = () => {
     setTransactionToDelete(null);
   }
 
-  const { transactions1 } = useTransactionFilters();
+  const { transactions1, dispatch , transactionsFilters } = useTransactionFilters();
 
   console.log("dash ", transactions1);
 
@@ -43,7 +43,7 @@ const Transactions = () => {
       <main className="flex-1 px-5 py-5">
         <Header />
         <section className="bg-back-white px-4 py-4 rounded-md shadow-sm">
-          <TransactionsHeader />
+          <TransactionsHeader dispatch={dispatch} transactionsFilters={transactionsFilters} />
           <div className="space-y-3">
             {!isLoading &&
               transactions?.length > 0 &&

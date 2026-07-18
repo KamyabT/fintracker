@@ -1,8 +1,9 @@
 import { useTransactions } from "../../context/TransactionsContext";
 
-const TransactionsFilters = () => {
+const TransactionsFilters = ({ dispatch, transactionsFilters }) => {
   const { categories } = useTransactions();
 
+  console.log("transactionsFilters", transactionsFilters);
   return (
     <div className="flex flex-row items-center space-x-5 me-5">
       <div className="flex flex-row items-center">
@@ -13,6 +14,8 @@ const TransactionsFilters = () => {
           className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
           type="search"
           placeholder="Search..."
+          onChange={(e) => dispatch({ type: "SET_SEARCH", payload: e.target.value })}
+          value={transactionsFilters.search}
         />
       </div>
       <div>
@@ -23,6 +26,11 @@ const TransactionsFilters = () => {
           className="font-medium border px-3 py-2 border-gray-300 outline-none rounded-lg text-[14px] cursor-pointer focus:border-primary"
           name=""
           id=""
+          onChange={(e) => {
+            console.log("type dispatch", e.target.value);
+            dispatch({ type: "SET_TYPE", payload: e.target.value });
+          }}
+          value={transactionsFilters.type}
         >
           <option value="All">All</option>
           <option value="Income">Income</option>
@@ -38,10 +46,16 @@ const TransactionsFilters = () => {
             className="font-medium border px-3 py-2 border-gray-300 outline-none rounded-lg text-[14px] cursor-pointer focus:border-primary"
             name=""
             id=""
+            onChange={(e) => dispatch({ type: "SET_CATEGORY", payload: e.target.value })}
+            value={transactionsFilters.category}
           >
             <option value="All">All</option>
             {categories?.items?.map((category) => {
-              return <option value="">{category.name}</option>;
+              return (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              );
             })}
           </select>
         )}
