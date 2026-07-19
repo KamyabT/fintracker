@@ -10,7 +10,7 @@ export function useTransactionFilters() {
 
   if (search && search !== "") {
     filteredTransactions = filteredTransactions.filter((transaction) => {
-      return transaction.name === search;
+      return transaction.transactionName.toLowerCase().includes(search.toLowerCase());
     });
   }
 

@@ -12,14 +12,6 @@ const TransactionsList = ({
   const { transactionName, transactionDate, type, amount, expand } = transaction;
   const { user } = useAuth();
 
-  function handleDeleteTransaction(transaction) {
-    setTransactionToDelete(transaction);
-  }
-
-  function handleEditTransaction(transaction){
-    setTransactionToEdit(transaction)
-  }
-
   return (
     <div
       className={`grid ${showActions ? "grid-cols-[50px_1fr_1fr_1.5fr_1fr_1fr_150px]" : "grid-cols-[50px_1fr_1fr_1.5fr_1fr_1fr]"}  border-b-1 border-gray-100 py-3 mb-0`}
@@ -65,13 +57,13 @@ const TransactionsList = ({
         <div className="flex items-center ms-5">
           <Button
             classesList={`me-3 px-3 py-2 border border-gray-300 rounded-lg text-primary font-semibold text-[14px] cursor-pointer`}
-            onClick={()=>handleEditTransaction(transaction)}
+            onClick={()=>setTransactionToEdit(transaction)}
           >
             Edit
           </Button>
           <Button
             classesList={`bg-back-danger-dark text-white px-3 py-2 border border-gray-300 rounded-lg  font-semibold text-[14px] cursor-pointer`}
-            onClick={() => handleDeleteTransaction(transaction)}
+            onClick={() => setTransactionToDelete(transaction)}
           >
             Delete
           </Button>

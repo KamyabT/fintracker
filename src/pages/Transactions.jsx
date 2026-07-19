@@ -31,8 +31,6 @@ const Transactions = () => {
 
   const { filteredTransactions, dispatch , transactionsFilters } = useTransactionFilters();
 
-  console.log("dash ", filteredTransactions);
-
   return (
     <div className="flex flex-row bg-back-secondary">
       {transactionToDelete && (

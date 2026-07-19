@@ -1,6 +1,6 @@
 import { useTransactions } from "../../context/TransactionsContext";
 
-const DashboardPaginations = () => {
+const DashboardPagination = () => {
   const { dashboardTotalPages, setDashboardPage, dashboardPage } =
     useTransactions();
 
@@ -9,7 +9,6 @@ const DashboardPaginations = () => {
       return;
     }
     setDashboardPage(page);
-    console.log("page clicked" , page)
   }
 
   const pages = Array.from({ length: dashboardTotalPages }, (_, index) => index + 1);
@@ -45,4 +44,4 @@ const DashboardPaginations = () => {
   );
 };
 
-export default DashboardPaginations;
+export default DashboardPagination;

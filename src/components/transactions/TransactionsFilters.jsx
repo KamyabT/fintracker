@@ -3,7 +3,7 @@ import { useTransactions } from "../../context/TransactionsContext";
 const TransactionsFilters = ({ dispatch, transactionsFilters }) => {
   const { categories } = useTransactions();
 
-  console.log("transactionsFilters", transactionsFilters);
+  
   return (
     <div className="flex flex-row items-center space-x-5 me-5">
       <div className="flex flex-row items-center">
