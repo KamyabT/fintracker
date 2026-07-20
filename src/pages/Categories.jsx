@@ -14,8 +14,10 @@ const Categories = () => {
   return (
     <div className="flex flex-row bg-back-secondary">
       <Sidebar />
-      <main className="flex-1 flex-wrap px-5 py-5 overflow-y-auto">
-        {showCategoryForm && <AddCategoriesForm setShowCategoryForm={setShowCategoryForm} />}
+      <main className="flex-1 flex-wrap px-5 py-5 overflow-y-auto space-y-4">
+        {showCategoryForm && (
+          <AddCategoriesForm setShowCategoryForm={setShowCategoryForm} />
+        )}
         {showTransactionModal && <AddTransactionForm />}
         <Header />
         <section className="flex flex-col bg-back-white space-y-6 px-4 py-4 rounded-md shadow-sm">
@@ -36,6 +38,8 @@ const Categories = () => {
               </Button>
             </div>
           </div>
+        </section>
+        <section className="flex flex-col bg-back-white space-y-6 px-4 py-4 rounded-md shadow-sm">
           <CategoriesList />
         </section>
       </main>
