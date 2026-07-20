@@ -29,7 +29,7 @@ const Transactions = () => {
     setTransactionToDelete(null);
   }
 
-  const { filteredTransactions, dispatch , transactionsFilters } = useTransactionFilters();
+  const { filteredTransactions, dispatch, transactionsFilters } = useTransactionFilters();
 
   return (
     <div className="flex flex-row bg-back-secondary">
@@ -41,7 +41,10 @@ const Transactions = () => {
       <main className="flex-1 px-5 py-5">
         <Header />
         <section className="bg-back-white px-4 py-4 rounded-md shadow-sm">
-          <TransactionsHeader dispatch={dispatch} transactionsFilters={transactionsFilters} />
+          <TransactionsHeader
+            dispatch={dispatch}
+            transactionsFilters={transactionsFilters}
+          />
           <div className="space-y-3">
             {!isLoading &&
               filteredTransactions?.length > 0 &&
@@ -54,8 +57,13 @@ const Transactions = () => {
                   setTransactionToEdit={openEditModal} // 👈 use context function
                 />
               ))}
+            {!isLoading && filteredTransactions?.length <= 0 && (
+              <div className="flex justify-center font-semibold text-[20px] text-gray-500 mt-5">
+                No results found
+              </div>
+            )}
             {isLoading && (
-              <div className="flex justify-center font-semibold text-[16px] text-gray-500">
+              <div className="flex justify-center font-semibold text-[20px] text-gray-500 mt-5">
                 Loading transactions...
               </div>
             )}
