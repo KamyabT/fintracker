@@ -1,6 +1,7 @@
 import { CircleX } from "lucide-react";
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
+import { addNewCategory } from "../../services/transactions";
 
 const AddCategoriesForm = ({ setShowCategoryForm }) => {
   const { register, handleSubmit, watch, setValue } = useForm({
@@ -9,10 +10,14 @@ const AddCategoriesForm = ({ setShowCategoryForm }) => {
     },
   });
 
-  function onSubmit (data){
-    console.log("submitted")
+  async function onSubmit(data) {
+    console.log("submitted");
+    try {
+      const result = await addNewCategory(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
-
 
   function handleCloseCategoryForm() {
     setShowCategoryForm(false);
@@ -20,7 +25,10 @@ const AddCategoriesForm = ({ setShowCategoryForm }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
-      <form onSubmit={handleSubmit(onSubmit)} className="bg-white w-full max-w-xl rounded-lg shadow-lg p-6">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="bg-white w-full max-w-xl rounded-lg shadow-lg p-6"
+      >
         <div className="space-y-4">
           <div className="flex flex-row justify-between">
             <div className="flex flex-col mb-1">
@@ -46,7 +54,7 @@ const AddCategoriesForm = ({ setShowCategoryForm }) => {
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
                 type="text"
                 placeholder="Category Name"
-                {...register("categoryName", {
+                {...register("name", {
                   required: "Category Name is required",
                 })}
               />
@@ -60,14 +68,12 @@ const AddCategoriesForm = ({ setShowCategoryForm }) => {
                 placeholder="Select Type"
                 name=""
                 id=""
-                {...register("transactionName", {
-                  required: "Transaction Name is required",
+                {...register("type", {
+                  required: "Type is required",
                 })}
               >
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">3</option>
-                <option value="">4</option>
+                <option value="Income">Income</option>
+                <option value="Expense">Expense</option>
               </select>
             </div>
           </div>
@@ -82,6 +88,7 @@ const AddCategoriesForm = ({ setShowCategoryForm }) => {
                 id=""
                 {...register("categoryIcon")}
               >
+                <option value="1">1</option>
                 {/* {allCategories?.items.map((category) => {
                   return <option value={`${category.id}`}>{category.name}</option>;
                 })} */}
@@ -95,7 +102,7 @@ const AddCategoriesForm = ({ setShowCategoryForm }) => {
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
                 name=""
                 id=""
-                {...register("categoryColor")}
+                {...register("color")}
               >
                 <option value="mainWallet">Main Wallet</option>
               </select>

@@ -14,10 +14,7 @@ export async function getTransactions(page = 1, perPage = 5) {
   return result.data;
 }
 
-export async function getCategories() {
-  const result = await api.get(`collections/categories/records`);
-  return result.data;
-}
+
 
 export async function addNewTransaction(data) {
   try {
@@ -37,4 +34,16 @@ export async function deleteTransaction(data) {
 export async function updateTransaction(data) {
   const result = await api.patch(`/collections/transactions/records/${data.id}`, data);
   return result;
+}
+
+
+export async function getCategories() {
+  const result = await api.get(`collections/categories/records`);
+  return result.data;
+}
+
+
+export async function addNewCategory(data){
+  const result = await api.post (`collections/categories/records` , data)
+  return result
 }
