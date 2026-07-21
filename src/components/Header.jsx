@@ -5,7 +5,7 @@ import { useTransactions } from "../context/TransactionsContext";
 
 const Header = () => {
   const { user } = useAuth();
-  const { openAddModal } = useTransactions(); // 👈 use context function
+  const { openAddModal } = useTransactions();
 
   return (
     <header className="mb-5">
@@ -21,7 +21,7 @@ const Header = () => {
         <div className="flex flex-row items-center">
           <Button
             classesList="bg-primary text-white px-4 py-2 rounded-lg font-normal text-[14px] hover:bg-primary-dark cursor-pointer me-4"
-            onClick={openAddModal} // 👈 no more prop needed
+            onClick={openAddModal}
             type="button"
           >
             + Add Transaction

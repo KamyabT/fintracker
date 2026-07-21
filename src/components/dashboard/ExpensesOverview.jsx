@@ -1,6 +1,12 @@
 import { useTransactions } from "../../context/TransactionsContext";
 import { Bar, BarChart, XAxis, YAxis, CartesianGrid } from "recharts";
-import { isThisMonth, eachDayOfInterval, startOfMonth, lastDayOfMonth, format } from "date-fns";
+import {
+  isThisMonth,
+  eachDayOfInterval,
+  startOfMonth,
+  lastDayOfMonth,
+  format,
+} from "date-fns";
 
 const margin = {
   top: 20,
@@ -26,19 +32,21 @@ const renderCustomBarLabel = ({ x, y, width, value }) => {
 };
 
 const ExpensesOverview = () => {
-  const { allTransaction  } = useTransactions();
+  
+  const { allTransaction } = useTransactions();
   /***************************/
 
   let start = startOfMonth(new Date());
   let end = lastDayOfMonth(new Date());
 
-  const thisMonthTransactions = allTransaction?.items?.filter(
-    (transaction) =>
-      isThisMonth(new Date(transaction.transactionDate)) &&
-      transaction.type === "Expense",
-  )?? [];
+  const thisMonthTransactions =
+    allTransaction?.items?.filter(
+      (transaction) =>
+        isThisMonth(new Date(transaction.transactionDate)) &&
+        transaction.type === "Expense",
+    ) ?? [];
 
-  console.log(thisMonthTransactions , "this month")
+  console.log(thisMonthTransactions, "this month");
   const ExpensesByDay = thisMonthTransactions.reduce((acc, transaction) => {
     const transactionDay = new Date(transaction.transactionDate).getDate();
     acc[transactionDay] = (acc[transactionDay] || 0) + transaction.amount;
@@ -63,7 +71,7 @@ const ExpensesOverview = () => {
             name=""
             id=""
           >
-            <option value="month">{format((new Date()), "MMMM , yyy")}</option>
+            <option value="month">{format(new Date(), "MMMM , yyy")}</option>
           </select>
         </div>
       </div>

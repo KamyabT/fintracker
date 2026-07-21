@@ -15,11 +15,17 @@ const AddTransactionForm = () => {
 
   const isEditing = !!transactionToEdit;
 
-  const { register, handleSubmit, watch, setValue } = useForm({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       transactionName: transactionToEdit?.transactionName || "",
       amount: transactionToEdit?.amount || "",
-      type: transactionToEdit?.type || "Expense",
+      type: transactionToEdit?.type || "",
       category: transactionToEdit?.category || "", // ID not name!
       date: transactionToEdit
         ? format(new Date(transactionToEdit.transactionDate), "yyyy-MM-dd")
@@ -74,7 +80,14 @@ const AddTransactionForm = () => {
             </div>
           </div>
           <div className="flex flex-col">
-            <label className="font-medium mb-2">Transaction Name</label>
+            <div className="flex flex-row justify-between">
+              <label className="font-medium mb-2">Transaction Name</label>
+              {errors.transactionName && (
+                <p className="text-state--danger mt-1 text-[13px]">
+                  {errors.transactionName.message}
+                </p>
+              )}
+            </div>
             <input
               className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
               type="text"
@@ -86,7 +99,14 @@ const AddTransactionForm = () => {
           </div>
           <div className="flex flex-row gap-x-6">
             <div className="flex flex-col w-full">
-              <label className="font-medium mb-2">Transaction Type</label>
+              <div className="flex flex-row justify-between">
+                <label className="font-medium mb-2">Transaction Type</label>
+                {errors.type && (
+                  <p className="text-state--danger mt-1 text-[13px]">
+                    {errors.type.message}
+                  </p>
+                )}
+              </div>
               <div className="flex flex-row gap-x-3">
                 <Button
                   classesList={`flex items-center justify-center gap-x-2 border w-full rounded-md border-gray-300 py-2 cursor-pointer font-medium ${selectedType === "Expense" ? "bg-red-100 text-red-500 border-red-500" : ""}`}
@@ -109,7 +129,15 @@ const AddTransactionForm = () => {
             </div>
             <div className="flex flex-col w-full relative">
               <DollarSign className="absolute bottom-3.5 left-2" size={14} />
-              <label className="font-medium mb-2">Amount</label>
+              <div className="flex flex-row justify-between">
+                <label className="font-medium mb-2">Amount</label>
+                {errors.amount && (
+                  <p className="text-state--danger mt-1 text-[13px]">
+                    {errors.amount.message}
+                  </p>
+                )}
+              </div>
+
               <input
                 type="number"
                 className="border border-gray-300 pl-6 py-2 rounded-md outline-none focus:border-primary"
@@ -133,7 +161,14 @@ const AddTransactionForm = () => {
               </select>
             </div>
             <div className="flex flex-col w-full">
-              <label className="font-medium mb-2">Payment Account</label>
+              <div className="flex flex-row justify-between">
+                <label className="font-medium mb-2">Payment Account</label>
+                {errors.paymentAccount && (
+                  <p className="text-state--danger mt-1 text-[13px]">
+                    {errors.paymentAccount.message}
+                  </p>
+                )}
+              </div>
               <select
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
                 {...register("paymentAccount", {
@@ -155,7 +190,14 @@ const AddTransactionForm = () => {
           </div>
           <div className="flex flex-row gap-x-6">
             <div className="flex flex-col w-full">
-              <label className="font-medium mb-2">Date</label>
+              <div className="flex flex-row justify-between">
+                <label className="font-medium mb-2">Date</label>
+                {errors.date && (
+                  <p className="text-state--danger mt-1 text-[13px]">
+                    {errors.date.message}
+                  </p>
+                )}
+              </div>
               <input
                 type="date"
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"
@@ -163,7 +205,14 @@ const AddTransactionForm = () => {
               />
             </div>
             <div className="flex flex-col w-full">
-              <label className="font-medium mb-2">Time</label>
+              <div className="flex flex-row justify-between">
+                <label className="font-medium mb-2">Time</label>
+                {errors.time && (
+                  <p className="text-state--danger mt-1 text-[13px]">
+                    {errors.time.message}
+                  </p>
+                )}
+              </div>
               <input
                 type="time"
                 className="border border-gray-300 px-3 py-2 rounded-md outline-none focus:border-primary"

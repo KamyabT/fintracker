@@ -1,15 +1,29 @@
+import { useMemo } from "react";
 import { useTransactions } from "../context/TransactionsContext";
 
 export function useTransactionStats() {
-  const {allTransaction } = useTransactions();
+  const { allTransaction } = useTransactions();
 
-  const totalIncome = allTransaction?.items
-    ?.filter((t) => t.type === "Income")
-    .reduce((sum, t) => sum + t.amount, 0);
+  const { totalIncome, totalExpenses } = useMemo(() => {
+    return (
+      allTransaction?.items?.reduce(
+        (acc, transaction) => {
+          if (transaction.type === "Income") {
+            acc.totalIncome += transaction.amount;
+          }
+          if (transaction.type === "Expense") {
+            acc.totalExpenses += transaction.amount;
+          }
 
-  const totalExpenses = allTransaction?.items
-    ?.filter((t) => t.type === "Expense")
-    .reduce((sum, t) => sum + t.amount, 0);
+          return acc;
+        },
+        {
+          totalIncome: 0,
+          totalExpenses: 0,
+        },
+      ) ?? { totalIncome: 0, totalExpenses: 0 }
+    );
+  }, [allTransaction?.items]);
 
   const netBalance = totalIncome - totalExpenses;
 

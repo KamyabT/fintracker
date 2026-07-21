@@ -59,8 +59,9 @@ export function TransactionsContextProvider({ children }) {
     try {
       await addNewTransaction(data);
       toast.success("Transaction added successfully!");
-      queryClient.invalidateQueries({ queryKey: [transactions] });
-      queryClient.invalidateQueries({ queryKey: [allTransaction] });
+      closeModal();
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["allTransaction"] });
     } catch (error) {
       toast.error("Failed to add transaction");
       throw error;
