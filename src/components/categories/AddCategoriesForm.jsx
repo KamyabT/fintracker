@@ -2,6 +2,7 @@ import { CircleX } from "lucide-react";
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import { addNewCategory } from "../../services/transactions";
+import { colorGenerator } from "../../configs/colorGenerator";
 
 const AddCategoriesForm = ({ setShowCategoryForm }) => {
   const { register, handleSubmit, watch, setValue } = useForm({
@@ -11,7 +12,6 @@ const AddCategoriesForm = ({ setShowCategoryForm }) => {
   });
 
   async function onSubmit(data) {
-    console.log("submitted");
     try {
       const result = await addNewCategory(data);
     } catch (error) {
@@ -22,6 +22,10 @@ const AddCategoriesForm = ({ setShowCategoryForm }) => {
   function handleCloseCategoryForm() {
     setShowCategoryForm(false);
   }
+
+  const colors = colorGenerator();
+
+  console.log(colors);
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
@@ -104,13 +108,18 @@ const AddCategoriesForm = ({ setShowCategoryForm }) => {
                 id=""
                 {...register("color")}
               >
-                <option value="mainWallet">Main Wallet</option>
+                {colors.map((color) => {
+                  return <option value={color} key={color}>{color}</option>;
+                })}
               </select>
             </div>
           </div>
           <div className="flex flex-col">
             <label className="font-medium mb-2" htmlFor="description">
               Description
+              <span className="font-medium text-[12px] text-gray-500 ms-1">
+                (optional)
+              </span>
             </label>
             <input
               className="border border-gray-300 outline-none w-full rounded-md px-3 py-2 focus:border-primary"

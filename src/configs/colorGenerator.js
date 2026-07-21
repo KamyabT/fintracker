@@ -1,20 +1,23 @@
-const hexCharacters = [0,1,2,3,4,5,6,7,8,9,"A","B","C","D","E","F"]
-
-
-
-function getCharacter(index) {
-    return hexCharacters[index]
-}
+const hexCharacters = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F"];
 
 function generateNewColor() {
-    let hexColorRep = "#"
+  let color = "#";
 
-    for (let index = 0; index < 6; index++){
-        const randomPosition = Math.floor ( Math.random() * hexCharacters.length ) 
-        hexColorRep += getCharacter( randomPosition )
-    }
+  for (let i = 0; i < 6; i++) {
+    const randomPosition = Math.floor(Math.random() * hexCharacters.length);
 
-    return hexColorRep
+    color += hexCharacters[randomPosition];
+  }
+
+  return color;
 }
 
-console.log( generateNewColor() )
+export function colorGenerator() {
+  const colors = new Set();
+
+  while (colors.size < 15) {
+    colors.add(generateNewColor());
+  }
+
+  return [...colors];
+}
