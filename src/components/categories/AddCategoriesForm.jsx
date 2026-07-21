@@ -1,8 +1,8 @@
 import { CircleX } from "lucide-react";
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
-import { addNewCategory } from "../../services/transactions";
 import { colorGenerator } from "../../configs/colorGenerator";
+import { useTransactions } from "../../context/TransactionsContext";
 
 const AddCategoriesForm = ({ setShowCategoryForm }) => {
   const { register, handleSubmit, watch, setValue } = useForm({
@@ -11,12 +11,11 @@ const AddCategoriesForm = ({ setShowCategoryForm }) => {
     },
   });
 
+  const {handleAddCategory} = useTransactions()
+
   async function onSubmit(data) {
-    try {
-      const result = await addNewCategory(data);
-    } catch (error) {
-      console.log(error);
-    }
+    const result = await handleAddCategory(data);
+    setShowCategoryForm(false);
   }
 
   function handleCloseCategoryForm() {
@@ -24,8 +23,6 @@ const AddCategoriesForm = ({ setShowCategoryForm }) => {
   }
 
   const colors = colorGenerator();
-
-  console.log(colors);
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
@@ -109,7 +106,11 @@ const AddCategoriesForm = ({ setShowCategoryForm }) => {
                 {...register("color")}
               >
                 {colors.map((color) => {
-                  return <option value={color} key={color}>{color}</option>;
+                  return (
+                    <option value={color} key={color}>
+                      {color}
+                    </option>
+                  );
                 })}
               </select>
             </div>

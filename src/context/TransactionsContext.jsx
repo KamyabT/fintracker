@@ -6,6 +6,7 @@ import {
   deleteTransaction,
   updateTransaction,
   addNewTransaction,
+  addNewCategory,
 } from "../services/transactions";
 import toast from "react-hot-toast";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -98,6 +99,22 @@ export function TransactionsContextProvider({ children }) {
     }
   }
 
+  /*****************Add Category Request Initiation*****************/
+
+    async function handleAddCategory(data) {
+    try {
+      await addNewCategory(data);
+      toast.success("Transaction added successfully!");
+      
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+    } catch (error) {
+      toast.error("Failed to add transaction");
+      throw error;
+    }
+  }
+
+  /*****************Edit Category Request Initiation*****************/
+
   function openAddModal() {
     setTransactionToEdit(null);
     setShowTransactionModal(true);
@@ -141,6 +158,7 @@ export function TransactionsContextProvider({ children }) {
         handleDeleteTransaction,
         handleUpdateTransaction,
         handleAddTransaction,
+        handleAddCategory,
 
         openAddModal,
         openEditModal,
