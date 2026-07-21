@@ -1,34 +1,50 @@
+import { useMemo } from "react";
 import { useTransactions } from "../context/TransactionsContext";
 import { isThisMonth } from "date-fns";
 
 export function useTransactionsCalculations() {
   const { allTransaction } = useTransactions();
 
-  const thisMonth = allTransaction?.items?.filter((transaction) =>
-    isThisMonth(new Date(transaction.transactionDate)),
-  );
+  /***********Is This Month***********/
+  const thisMonth = useMemo(() => {
+    return allTransaction?.items?.filter((transaction) =>
+      isThisMonth(new Date(transaction.transactionDate)),
+    );
+  }, [allTransaction?.items]);
 
-  const sortedBycate = (thisMonth ?? []).reduce((acc, transaction) => {
-    const { name, color } = transaction.expand.category;
-    if (!acc[name]) {
-      acc[name] = {
-        amount: 0,
-        color,
-      };
-    }
-    acc[name].amount += transaction.amount;
-    return acc;
-  }, {});
+  /***********Sorting By Cate***********/
 
-  const finalData = Object.entries(sortedBycate).map(([name, data]) => ({
-    name,
-    amount: data.amount,
-    color: data.color,
-  }));
+  const sortedBycate = useMemo(() => {
+    return (thisMonth ?? []).reduce((acc, transaction) => {
+      const { name, color } = transaction.expand.category;
+      if (!acc[name]) {
+        acc[name] = {
+          amount: 0,
+          color,
+        };
+      }
+      acc[name].amount += transaction.amount;
+      return acc;
+    }, {});
+  }, [thisMonth]);
 
-  const totalAmount = finalData.reduce((acc, transaction) => {
-    return acc + transaction.amount;
-  }, 0);
+  /***********Final Data After Sorting***********/
+
+  const finalData = useMemo(() => {
+    return Object.entries(sortedBycate).map(([name, data]) => ({
+      name,
+      amount: data.amount,
+      color: data.color,
+    }));
+  }, [sortedBycate]);
+
+  /***********Total Amount After Sorting***********/
+
+  const totalAmount = useMemo(() => {
+    return finalData.reduce((acc, transaction) => {
+      return acc + transaction.amount;
+    }, 0);
+  }, [finalData]);
 
   return { totalAmount, finalData };
 }
