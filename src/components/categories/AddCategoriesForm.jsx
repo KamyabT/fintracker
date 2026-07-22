@@ -11,10 +11,13 @@ const AddCategoriesForm = ({ setShowCategoryForm }) => {
     },
   });
 
-  const {handleAddCategory} = useTransactions()
+  const { handleAddCategory } = useTransactions();
 
   async function onSubmit(data) {
-    const result = await handleAddCategory(data);
+    const userId = JSON.parse(localStorage.getItem("user")).id;
+    const finalData = { ...data, user: userId };
+
+    const result = await handleAddCategory(finalData);
     setShowCategoryForm(false);
   }
 

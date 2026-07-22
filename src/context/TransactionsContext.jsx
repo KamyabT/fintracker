@@ -28,7 +28,7 @@ export function TransactionsContextProvider({ children }) {
   const { data: categories } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
-    staleTime: 0,
+    staleTime: 60 * 1000,
   });
 
   const { data: allTransaction } = useQuery({
@@ -101,11 +101,10 @@ export function TransactionsContextProvider({ children }) {
 
   /*****************Add Category Request Initiation*****************/
 
-    async function handleAddCategory(data) {
+  async function handleAddCategory(data) {
     try {
       await addNewCategory(data);
       toast.success("Transaction added successfully!");
-      
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     } catch (error) {
       toast.error("Failed to add transaction");
@@ -113,6 +112,18 @@ export function TransactionsContextProvider({ children }) {
     }
   }
 
+  /*****************Delete Category Request Initiation*****************/
+  async function handleDeleteCategory(category) {
+    try {
+      await deleteTransaction(category);
+      toast.success("Transaction deleted successfully!");
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["allTransaction"] });
+    } catch (error) {
+      toast.error("Failed to delete transaction");
+      throw error;
+    }
+  }
   /*****************Edit Category Request Initiation*****************/
 
   function openAddModal() {
@@ -159,6 +170,7 @@ export function TransactionsContextProvider({ children }) {
         handleUpdateTransaction,
         handleAddTransaction,
         handleAddCategory,
+        handleDeleteCategory,
 
         openAddModal,
         openEditModal,

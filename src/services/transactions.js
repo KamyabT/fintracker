@@ -14,8 +14,6 @@ export async function getTransactions(page = 1, perPage = 5) {
   return result.data;
 }
 
-
-
 export async function addNewTransaction(data) {
   try {
     const result = await api.post("/collections/transactions/records", data);
@@ -36,14 +34,12 @@ export async function updateTransaction(data) {
   return result;
 }
 
-
 export async function getCategories() {
-  const result = await api.get(`collections/categories/records`);
+  const result = await api.get(`collections/categories/records?page=1&perPage=10`);
   return result.data;
 }
 
-
-export async function addNewCategory(data){
-  const result = await api.post (`collections/categories/records` , data)
-  return result
+export async function addNewCategory(data) {
+  const result = await api.post(`collections/categories/records`, data);
+  return result;
 }

@@ -1,6 +1,6 @@
 import Button from "../ui/Button";
 
-const CategoriesListItem = ({ cate }) => {
+const CategoriesListItem = ({ cate, setCategoryToDelete }) => {
   return (
     <div className="grid grid-cols-[1fr_1fr_0.5fr_1fr_1fr] border-b-1 border-gray-100 py-3 mb-0">
       <div className="flex items-center font-semibold">{cate.name}</div>
@@ -30,6 +30,7 @@ const CategoriesListItem = ({ cate }) => {
         </Button>
         <Button
           classesList={`bg-back-danger-dark text-white px-3 py-2 border border-gray-300 rounded-lg  font-semibold text-[14px] cursor-pointer`}
+          onClick={() => setCategoryToDelete(cate)}
         >
           Delete
         </Button>
