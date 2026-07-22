@@ -64,7 +64,7 @@ const ExpensesByCategory = () => {
       <Sector
         {...props}
         // fill={COLORS[props.index % COLORS.length]}
-        fill={`#${props.color}`}
+        fill={`${props.color}`}
         fillOpacity={fillOpacity}
         style={{ transition: "fill-opacity 0.3s ease" }}
       />
@@ -101,7 +101,13 @@ const ExpensesByCategory = () => {
         <div className="flex flex-col pe-5">
           <div className="flex flex-col border-b-2 border-gray-200 mb-3 pb-2">
             {finalData?.map((category) => {
-              return <ExpensesCategoryByItem data={category} key={category.name} total={totalAmount}/>;
+              return (
+                <ExpensesCategoryByItem
+                  data={category}
+                  key={category.name}
+                  total={totalAmount}
+                />
+              );
             })}
           </div>
           <div className="flex flex-row w-full justify-between items-center">

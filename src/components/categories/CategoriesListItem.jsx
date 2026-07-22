@@ -18,7 +18,7 @@ const CategoriesListItem = ({ cate, setCategoryToDelete }) => {
           style={{
             height: "10px",
             width: "10px",
-            backgroundColor: `#${cate.color}`,
+            backgroundColor: `${cate.color}`,
           }}
         ></span>
       </div>
