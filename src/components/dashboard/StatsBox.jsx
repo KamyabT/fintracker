@@ -17,13 +17,13 @@ const StatsBox = ({ stat }) => {
           </p>
         </div>
       </div>
-      <div className="flex flex-row justify-between">
+      {/* <div className="flex flex-row justify-between">
         <div>
           <span>12.5%</span>
           <span>from last month</span>
         </div>
         <div>Chart </div>
-      </div>
+      </div> */}
     </div>
   );
 };

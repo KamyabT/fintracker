@@ -8,7 +8,7 @@ export async function getAllTransactions() {
 
 export async function getTransactions(page = 1, perPage = 5) {
   const result = await api.get(
-    `/collections/transactions/records?page=${page}&perPage=${perPage}&expand=category&sort=-transactionDate`,
+    `/collections/transactions/records?page=${page}&perPage=${perPage}&expand=category&sort=-created`,
   );
 
   return result.data;

@@ -3,15 +3,15 @@ import Button from "../ui/Button";
 const CategoriesListItem = ({ cate }) => {
   return (
     <div className="grid grid-cols-[1fr_1fr_0.5fr_1fr_1fr] border-b-1 border-gray-100 py-3 mb-0">
-      <div className="">{cate.name}</div>
-      <div className="flex">
+      <div className="flex items-center font-semibold">{cate.name}</div>
+      <div className="flex items-center">
         <span
           className={`${cate?.type === "Income" ? "bg-back-success text-state--success" : "bg-back-danger text-state--danger"} font-bold flex text-[12px] items-center px-2 py-1 rounded-lg`}
         >
           {cate.type}
         </span>
       </div>
-      <div>{cate.icon}</div>
+      <div className="flex items-center">{cate.icon}</div>
       <div className="flex items-center">
         <span
           className={`flex rounded-full`}
@@ -22,9 +22,7 @@ const CategoriesListItem = ({ cate }) => {
           }}
         ></span>
       </div>
-      {/* <div>53</div>
-      <div>$5000</div> */}
-      <div>
+      <div className="flex items-center">
         <Button
           classesList={`me-3 px-3 py-2 border border-gray-300 rounded-lg text-primary font-semibold text-[14px] cursor-pointer`}
         >

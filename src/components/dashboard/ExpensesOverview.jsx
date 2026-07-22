@@ -46,7 +46,6 @@ const ExpensesOverview = () => {
         transaction.type === "Expense",
     ) ?? [];
 
-  console.log(thisMonthTransactions, "this month");
   const ExpensesByDay = thisMonthTransactions.reduce((acc, transaction) => {
     const transactionDay = new Date(transaction.transactionDate).getDate();
     acc[transactionDay] = (acc[transactionDay] || 0) + transaction.amount;
