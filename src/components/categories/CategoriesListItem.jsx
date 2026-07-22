@@ -28,12 +28,12 @@ const CategoriesListItem = ({ cate, setCategoryToDelete }) => {
         >
           Edit
         </Button>
-        <Button
+        {/* <Button
           classesList={`bg-back-danger-dark text-white px-3 py-2 border border-gray-300 rounded-lg  font-semibold text-[14px] cursor-pointer`}
           onClick={() => setCategoryToDelete(cate)}
         >
           Delete
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
